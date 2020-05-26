@@ -13,11 +13,12 @@ import javax.validation.constraints.NotNull;
 public class ProdutoController {
 
     @GetMapping
-    public ProdutosDisponiveisDTO getProdutosDisponiveisVenda(
+    public String getProdutosDisponiveisVenda(
             @Valid @NotNull(message = "Id do consumidor é obrigatório") @RequestHeader Long consumidorId,
-            @Valid @NotNull(message = "Número da pagina é obrigatório") @RequestParam Integer numeroPagina,
-            BindingResult bindingResult
+            @Valid @NotNull(message = "Número da pagina é obrigatório") @RequestParam Integer numeroPagina
     ) {
+
+        return "foi";
 
     }
 
