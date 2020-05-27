@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Consumidor {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
