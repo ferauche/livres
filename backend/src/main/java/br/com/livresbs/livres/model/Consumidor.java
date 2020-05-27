@@ -37,4 +37,8 @@ public class Consumidor {
     @NotNull
     @JsonBackReference
     private PreComunidade precomunidade;
+
+	
+    
+    
 }

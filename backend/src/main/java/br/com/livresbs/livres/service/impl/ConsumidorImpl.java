@@ -26,7 +26,9 @@ public class ConsumidorImpl implements ConsumidorService {
     public List<ConsumidorDTO> listarConsumidor() {
         List<ConsumidorDTO> listConsdto = new ArrayList<>();
         cons.findAll().forEach(consumidor -> {
-
+        	
+      
+        	
             ConsumidorDTO builderDto = ConsumidorDTO.builder()
                     .nome(consumidor.getNome())
                     .cpf(consumidor.getCpf())
