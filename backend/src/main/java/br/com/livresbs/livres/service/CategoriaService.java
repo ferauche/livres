@@ -4,5 +4,5 @@ import java.util.List;
 import br.com.livresbs.livres.model.*;
 
 public interface CategoriaService {
-    List<Categoria> findAll();
+    List<CategoriaProduto> findAll();
 }

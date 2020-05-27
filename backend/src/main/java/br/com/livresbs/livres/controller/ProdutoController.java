@@ -30,10 +30,14 @@ public class ProdutoController {
     }
 
     @GetMapping("/categorias")
-    public CategoriasProdutosDTO getCategorias(){
-        var categorias = (List<Categoria>) categoriaService.findAll();
-        var params = new HashMap<String, Object>();
-        params.put("categorias", categorias);
-        return new CategoriasProdutosDTO()
+    public CategoriasProdutosDTO getCategorias() {
+
+        List<CategoriaProduto> categorias = categoriaService.findAll();
+
+        return CategoriasProdutosDTO.builder()
+                .categorias(categorias.stream().map(CategoriaProduto::getNome).collect(Collectors.toList()))
+                .build();
+
     }
+
 }
