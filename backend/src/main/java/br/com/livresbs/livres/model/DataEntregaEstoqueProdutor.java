@@ -1,7 +1,5 @@
 package br.com.livresbs.livres.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,24 +14,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_data_entrega")
+@Table(name = "tb_data_entrega_estoque_produtor")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DataEntrega {
+public class DataEntregaEstoqueProdutor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@NotBlank
 	@ManyToOne
-	private PreComunidade precomunidade;
+	private DataEntrega dataEntrega;
 	
 	@NotBlank
-	private Date prazo;
+	@ManyToOne
+	private EstoqueProdutor estoqueProdutor;
 	
 	@NotBlank
-	private Date prazoLimitePedido;
-	
+	private Integer ordemConsumo;
 }
