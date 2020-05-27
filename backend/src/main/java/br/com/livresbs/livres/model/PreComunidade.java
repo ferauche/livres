@@ -27,4 +27,5 @@ public class PreComunidade {
     @OneToMany(mappedBy = "precomunidade")
     @JsonManagedReference
     private List<Consumidor> consumidor;
+    
 }
