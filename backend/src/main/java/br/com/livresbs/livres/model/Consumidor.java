@@ -20,16 +20,19 @@ import javax.validation.constraints.NotNull;
 public class Consumidor {
 
 
-    @Id
+
+    /*
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id;*/
+
+    @Id
+    @NotBlank
+    private String cpf;
 
     @NotBlank
     private String nome;
     @NotBlank
     private String sobrenome;
-    @NotBlank
-    private String cpf;
     @NotBlank
     private String senha;
 

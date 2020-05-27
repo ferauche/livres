@@ -4,6 +4,7 @@ import br.com.livresbs.livres.dto.ConsumidorDTO;
 import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.service.impl.ConsumidorImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +23,11 @@ public class ConsumidorController {
 
     @CrossOrigin
     @GetMapping("/consumidor/{id}")
-    public Consumidor listaConsumidorUnico(@PathVariable(value = "id") long id) {
+    public Consumidor listaConsumidorUnico(@PathVariable(value = "id") String id) {
         return cons.listaConsumidorUnico(id);
     }
 
     @CrossOrigin
     @PostMapping("/consumidor")
-    public void cadastraConsumidor(@RequestBody ConsumidorDTO con) { cons.cadastraConsumidor(con); };
+    public ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con) { return cons.cadastraConsumidor(con); }
 }
