@@ -1,6 +1,6 @@
 package br.com.livresbs.livres.controller;
 
-import br.com.livresbs.livres.dto.CadastroConsumidorDTO;
+import br.com.livresbs.livres.dto.ConsumidorDTO;
 import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.service.impl.ConsumidorImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class ConsumidorController {
 
     @CrossOrigin
     @GetMapping("/consumidor")
-    public List<Consumidor> listarConsumidor() {
+    public List<ConsumidorDTO> listarConsumidor() {
         return cons.listarConsumidor();
     }
 
@@ -28,8 +28,5 @@ public class ConsumidorController {
 
     @CrossOrigin
     @PostMapping("/consumidor")
-    public Consumidor cadastraConsumidor(@RequestBody CadastroConsumidorDTO con) { return cons.cadastraConsumidor(con) };
-    }
-
-
+    public void cadastraConsumidor(@RequestBody ConsumidorDTO con) { cons.cadastraConsumidor(con); };
 }

@@ -20,7 +20,7 @@ public class PreComunidadeImpl implements PreComunidadeService {
     }
 
     public PreComunidade listaPreComunidadeUnica(@PathVariable(value = "id") long id) {
-        return pcr.findById(id);
+        return pcr.findById(id).get();
     }
 
     public PreComunidade cadastraPreComunidade(@RequestBody PreComunidade pc) {
