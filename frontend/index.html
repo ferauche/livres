@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumidores - Cadastro</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form>
+        <input type="text" name="txt_nome" id="txt_nome" placeholder="Nome"><br>
+        <input type="text" name="txt_cpf" id="txt_cpf" placeholder="CPF"><br>
+        <input type="password" name="txt_senha" id="txt_senha" placeholder="Senha"><br>
+
+        <select id="cmb_precomuni">
+        </select>
+    </form>
+</body>
+
+<script>
+    $.ajax({
+        url:'http://localhost:8080/api/precomunidade',
+        type:'GET',
+        contentType: 'application/json', 
+        success:function(data){
+            console.log(data);
+
+            $.each(data, function(i, value){
+                $('#cmb_precomuni').append($('<option>').text(value.nome).attr('value', value.id));
+            });
+        }
+    });
+</script>
+</html>
