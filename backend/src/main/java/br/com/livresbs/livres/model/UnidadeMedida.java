@@ -13,18 +13,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_categoria_produto")
+@Table(name = "tb_unidade_medida")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaProduto {
+public class UnidadeMedida {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-    
-    @NotBlank
-	private String nome;
+    private Integer id;
 
+    @NotBlank
+    private String nome;
 }

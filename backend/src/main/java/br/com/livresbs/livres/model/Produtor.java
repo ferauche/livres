@@ -13,18 +13,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_categoria_produto")
+@Table(name = "tb_produtor")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaProduto {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Produtor {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-    
-    @NotBlank
+	@NotBlank
 	private String nome;
+	@NotBlank
+	private String cnpj;
 
 }
