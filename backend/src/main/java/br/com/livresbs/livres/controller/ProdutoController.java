@@ -1,31 +1,29 @@
 package br.com.livresbs.livres.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import br.com.livresbs.livres.dto.CategoriasProdutosDTO;
+import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
+import br.com.livresbs.livres.model.CategoriaProduto;
 import br.com.livresbs.livres.service.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController("/produtos")
+@RestController
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
     private CategoriaService categoriaService;
 
     @GetMapping
-    public String getProdutosDisponiveisVenda(
-            @Valid @NotNull(message = "Id do consumidor é obrigatório") @RequestHeader Long consumidorId,
-            @Valid @NotNull(message = "Número da pagina é obrigatório") @RequestParam Integer numeroPagina
+    public ProdutosDisponiveisDTO getProdutosDisponiveisVenda(
+            @RequestHeader(value = "consumidor-id") Long consumidorId,
+            @RequestParam(value = "pagina") Integer numeroPagina
     ) {
 
-        return "foi";
+        return null;
 
     }
 
