@@ -4,6 +4,7 @@ package br.com.livresbs.livres.service.impl;
 import br.com.livresbs.livres.model.Carrinho;
 import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.model.EstoqueProdutor;
+import br.com.livresbs.livres.model.Produto;
 import br.com.livresbs.livres.repository.CarrinhoRepository;
 
 import br.com.livresbs.livres.repository.ConsumidorRepository;
@@ -33,6 +34,13 @@ public class CarrinhoServiceImpl implements CarrinhoService {
         Optional<Carrinho> carrinhoOptional = repositoryCarrinho.findByConsumidorCpfAndEstoqueProdutorId(cpf, estoqueProdutorId);
         if(carrinhoOptional.isPresent()){
             Carrinho carrinho = carrinhoOptional.get();
+            Optional<EstoqueProdutor> estoqueProdutorOptional = repositoryEstoqueProdutor.findById(estoqueProdutorId);
+            EstoqueProdutor estoqueProdutor = estoqueProdutorOptional.get();
+            
+            if(estoqueProdutor.getQuantidade() < quantidade){
+                //TODO Lançar erro quando consumidor tentar adicionar produtos amais do que tem disponivel
+            }
+
             if (carrinho.getQuantidade() > 0) {
                 carrinho.setQuantidade(quantidade);
                 repositoryCarrinho.save(carrinho);
@@ -48,10 +56,15 @@ public class CarrinhoServiceImpl implements CarrinhoService {
             if(!estoqueProdutorOptional.isPresent()){
                 //TODO Lançar erro quando estoque não existir
             }
+            EstoqueProdutor estoqueProdutor = estoqueProdutorOptional.get();
+            if(estoqueProdutor.getQuantidade() < quantidade){
+                //TODO Lançar erro quando consumidor tentar adicionar produtos amais do que tem disponivel
+            }
             Carrinho carrinho = new Carrinho();
             carrinho.setQuantidade(quantidade);
             carrinho.setConsumidor(consumidorOptional.get());
             carrinho.setEstoqueProdutor(estoqueProdutorOptional.get());
+            repositoryCarrinho.save(carrinho);
         }
     }
 }
