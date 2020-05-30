@@ -1,14 +1,11 @@
 package br.com.livresbs.livres.model;
 
-import java.util.Date;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_data_entrega")
@@ -22,14 +19,26 @@ public class DataEntrega {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-
 	@ManyToOne
 	private PreComunidade precomunidade;
 	
-	@NotBlank
-	private Date prazo;
+	@NotNull
+	@Column(columnDefinition = "DATE")
+	private LocalDate prazo;
 	
-	@NotBlank
-	private Date prazoLimitePedido;
+	@NotNull
+	@Column(columnDefinition = "DATE")
+	private LocalDate prazoLimitePedido;
+
+	@Enumerated(EnumType.ORDINAL)
+	private StatusDataEntrega status = StatusDataEntrega.NAO_ATIVA;
+
+	@ManyToMany
+	@JoinTable(
+			name = "dataentrega_estoqueprodutor",
+			joinColumns = @JoinColumn(name = "dataentrega_id"),
+			inverseJoinColumns = @JoinColumn(name = "estoqueprodutor_id")
+	)
+	private List<EstoqueProdutor> estoques;
 	
 }
