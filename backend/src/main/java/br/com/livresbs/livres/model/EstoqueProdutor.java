@@ -10,7 +10,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "tb_estoque_produtor")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

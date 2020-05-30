@@ -9,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_data_entrega")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
