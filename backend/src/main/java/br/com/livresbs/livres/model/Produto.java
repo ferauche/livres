@@ -16,9 +16,13 @@ public class Produto {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;   
+	private Integer id;
+
     @NotBlank
 	private String nome;
+
     @NotBlank
-	private int categoria;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+	private CategoriaProduto categoria;
 }

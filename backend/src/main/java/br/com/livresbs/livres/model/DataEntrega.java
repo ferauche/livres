@@ -21,6 +21,7 @@ public class DataEntrega {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "precomunidade_id")
 	private PreComunidade precomunidade;
 	
 	@NotNull

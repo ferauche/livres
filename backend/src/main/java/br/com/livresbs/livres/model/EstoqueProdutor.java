@@ -23,14 +23,17 @@ public class EstoqueProdutor {
 	
 	@NotBlank
 	@ManyToOne
+	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	
 	@NotBlank
 	@ManyToOne
+	@JoinColumn(name = "produtor_id")
 	private Produtor produtor;
 	
 	@NotBlank
 	@ManyToOne
+	@JoinColumn(name = "unidademedida_id")
 	private UnidadeMedida unidadeMedida;
 	
 	@NotBlank
