@@ -2,10 +2,7 @@ package br.com.livresbs.livres.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,17 +10,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_consumidor")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Consumidor {
-
-
-
-    /*
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;*/
 
     @Id
     @NotBlank
