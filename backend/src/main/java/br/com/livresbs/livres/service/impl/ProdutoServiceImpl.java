@@ -70,7 +70,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		Page<EstoqueProdutor> estoques = estoqueProdutorRepository.findByDatasEntrega(
 			dataEntrega,
 			PageRequest.of(
-				pagina.intValue(),
+				pagina.intValue() - 1,
 				applicationProperty.getQuantidadeIntesPagina()
 			)
 		);
