@@ -67,8 +67,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 		DataEntrega dataEntrega = dataEntregaRepository.encontrarDataEntregaAtivaConsumidor(cpf);
 
-		Page<EstoqueProdutor> estoques = estoqueProdutorRepository.findByDatasEntregaId(
-			dataEntrega.getId(),
+		Page<EstoqueProdutor> estoques = estoqueProdutorRepository.findByDatasEntrega(
+			dataEntrega,
 			PageRequest.of(
 				pagina.intValue(),
 				applicationProperty.getQuantidadeIntesPagina()
