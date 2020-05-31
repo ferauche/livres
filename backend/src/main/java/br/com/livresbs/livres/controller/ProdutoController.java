@@ -4,6 +4,7 @@ import br.com.livresbs.livres.dto.CategoriasProdutosDTO;
 import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
 import br.com.livresbs.livres.model.CategoriaProduto;
 import br.com.livresbs.livres.service.CategoriaService;
+import br.com.livresbs.livres.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,17 @@ public class ProdutoController {
     @Autowired
     private CategoriaService categoriaService;
 
+    @Autowired
+    private ProdutoService produtoService;
+
     @GetMapping
-    public ProdutosDisponiveisDTO getProdutosDisponiveisVenda(
-            @RequestHeader(value = "consumidor-id") Long consumidorId,
-            @RequestParam(value = "pagina") Integer numeroPagina
+    public ProdutosDisponiveisDTO getProdutosDisponiveisVendaByCategoria (
+            @RequestHeader(value = "cpf") String cpf,
+            @RequestParam(value = "pagina") Integer numeroPagina,
+            @RequestParam(value = "categorias", required = false) List<String> categorias
     ) {
 
-        return null;
+        return produtoService.listarProdutosDisponiveisCompraConsumidor(cpf, numeroPagina);
 
     }
 
