@@ -14,6 +14,6 @@ public interface ProdutoService {
 	Produto editar(Produto produto);
 	void excluir(Produto produto);
 
-	ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina);
+	ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina, List<String> categorias);
 
 }
