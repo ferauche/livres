@@ -28,7 +28,11 @@ public class CarrinhoServiceImpl implements CarrinhoService {
     @Autowired
     private EstoqueProdutorRepository repositoryEstoqueProdutor;
 
-
+    /*
+        TODO implementar para que o parâmetro "quantidade" seja Double, pois existem medidas de vendas que podem conter
+         valores decimais, por exemplo: KG. Implementar validação para verificar se é permitido a gravação do Double no
+         formato enviado (real ou inteiro) de acordo com o tipo de unidade de medida associado ao estoque.
+     */
     @Override
     public void sincronizarProduto(String cpf, Integer estoqueProdutorId, Integer quantidade) {
         Optional<Carrinho> carrinhoOptional = repositoryCarrinho.findByConsumidorCpfAndEstoqueProdutorId(cpf, estoqueProdutorId);
