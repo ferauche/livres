@@ -28,7 +28,7 @@ public class ProdutoController {
             @RequestParam(value = "categorias", required = false) List<String> categorias
     ) {
 
-        return produtoService.listarProdutosDisponiveisCompraConsumidor(cpf, numeroPagina);
+        return produtoService.listarProdutosDisponiveisCompraConsumidor(cpf, numeroPagina, categorias);
 
     }
 
