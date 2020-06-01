@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-lg-8 mt-3">
+  <div class="container col-lg-10 mt-3">
     <div class="card livres-segundary text-center card-form">
       <div class="card-body text-light">
         <h3>Exemplo Form</h3>
