@@ -10,24 +10,12 @@
 import Header from "./components/Header";
 // import Form from "./components/Form";
 import Lista from "./components/Lista";
-import Users from "./services/users";
 
 export default {
   components: {
     "app-header": Header,
     "app-lista": Lista
     // "app-form": Form
-  },
-  data() {
-    return {
-      users: []
-    };
-  },
-  mounted() {
-    Users.listar().then(result => {
-      console.log(result.data);
-      this.users = result.data;
-    });
   }
 };
 </script>
