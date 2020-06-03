@@ -13,4 +13,5 @@ public interface ConsumidorService {
     List<ConsumidorDTO> listarConsumidor();
     Consumidor listaConsumidorUnico(@PathVariable(value = "id") String id);
     ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con);
+    void deletarConsumidor(@PathVariable(value = "id") String id);
 }

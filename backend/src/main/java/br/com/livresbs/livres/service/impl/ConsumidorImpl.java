@@ -25,6 +25,7 @@ public class ConsumidorImpl implements ConsumidorService {
 
     @Autowired
     PreComunidadeRepository pre;
+    
 
     public List<ConsumidorDTO> listarConsumidor() {
         List<ConsumidorDTO> listConsdto = new ArrayList<>();
@@ -71,5 +72,19 @@ public class ConsumidorImpl implements ConsumidorService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já Cadastrado!");
         }
     }
+
+	@Override
+	public /*ResponseEntity*/ void deletarConsumidor(String id) {
+		//if(cons.existsById(id)) {
+			//Consumidor con = cons.findById(id).get();
+			cons.deleteById(id);
+			//return ResponseEntity.ok().body("Consumidor: " + con.getNome() + " deletado com sucesso");
+		//}
+		
+			//return ResponseEntity.badRequest().body("Deu ruim");
+		
+	}
+
+
 
 }
