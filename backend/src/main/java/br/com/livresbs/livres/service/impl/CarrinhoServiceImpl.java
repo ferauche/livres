@@ -1,6 +1,8 @@
 package br.com.livresbs.livres.service.impl;
 
 
+import br.com.livresbs.livres.dto.CarrinhoDTO;
+import br.com.livresbs.livres.dto.ProdutoCarrinhoDTO;
 import br.com.livresbs.livres.model.Carrinho;
 import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.model.EstoqueProdutor;
@@ -13,6 +15,8 @@ import br.com.livresbs.livres.service.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,5 +74,21 @@ public class CarrinhoServiceImpl implements CarrinhoService {
             carrinho.setEstoqueProdutor(estoqueProdutorOptional.get());
             repositoryCarrinho.save(carrinho);
         }
+    }
+
+    @Override
+    public CarrinhoDTO listarCarrinhos(String cpf) {
+        List<Carrinho> carrinhos = new ArrayList<>(repositoryCarrinho.findByConsumidorCpf(cpf));
+        CarrinhoDTO carrinhoDTO = null;
+        carrinhos.forEach(carrinho -> {
+            ProdutoCarrinhoDTO produtoCarrinhoDTO = ProdutoCarrinhoDTO.builder()
+                    .estoqueProdutorId(carrinho.getEstoqueProdutor().getProduto().getId())
+                    .quantidade(carrinho.getQuantidade())
+                    .build();
+
+            carrinhoDTO.produtos.add(produtoCarrinhoDTO);
+        });
+
+        return carrinhoDTO;
     }
 }
