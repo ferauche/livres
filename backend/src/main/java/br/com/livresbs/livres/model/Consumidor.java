@@ -32,7 +32,7 @@ public class Consumidor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "precomunidade")
     @NotNull
-    @JsonBackReference
+    
     private PreComunidade precomunidade;
 
 	

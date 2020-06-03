@@ -4,28 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import br.com.livresbs.livres.config.properties.ApplicationProperty;
 import br.com.livresbs.livres.dto.ProdutoDisponivelDTO;
 import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
+import br.com.livresbs.livres.model.CategoriaProduto;
+import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.model.DataEntrega;
 import br.com.livresbs.livres.model.EstoqueProdutor;
+import br.com.livresbs.livres.model.Produto;
+import br.com.livresbs.livres.repository.CategoriaRepository;
 import br.com.livresbs.livres.repository.DataEntregaRepository;
 import br.com.livresbs.livres.repository.EstoqueProdutorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import br.com.livresbs.livres.model.Produto;
 import br.com.livresbs.livres.repository.ProdutoRepository;
 import br.com.livresbs.livres.service.ProdutoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepo;
-
+	
+	@Autowired
+	private CategoriaRepository categoriaRepo;
+	
 	@Autowired
 	private EstoqueProdutorRepository estoqueProdutorRepository;
 
@@ -48,8 +57,23 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public Produto cadastrar(Produto produto) {
-		return produtoRepo.save(produto);
+	public ResponseEntity<String> cadastrar(@RequestBody Produto produto) {
+		/*System.out.println("Prestes a criar o produto");
+	            Optional<CategoriaProduto> categoria = categoriaRepo.findById(produto.getCategoria().getId());
+	            if(!categoria.isPresent()){
+	                //TODO tratamente caso categoria nao exista
+	            }
+	            System.out.println("Prestes a criar o produto");
+	            Produto prod = Produto.builder()
+	                    .nome(produto.getNome())
+	                    .categoria(categoria.get())
+	                    .build();
+	            
+	            produtoRepo.save(prod);*/
+		produtoRepo.save(produto);
+
+	            return ResponseEntity.status(HttpStatus.OK).body("Cadastrado com Sucesso!");
+	
 	}
 
 	@Override
