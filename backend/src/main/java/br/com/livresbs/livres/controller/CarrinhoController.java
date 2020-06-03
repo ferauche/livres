@@ -17,11 +17,11 @@ public class CarrinhoController {
 
     @PostMapping
     public void sincronizarProduto(
-            @RequestHeader(value = "consumidor-id") String consumidorId,
+            @RequestHeader(value = "cpf") String cpf,
             @Valid @RequestBody ProdutoCarrinhoDTO produtoCarrinhoDTO
     ) {
         carrinhoService.sincronizarProduto(
-                consumidorId,
+                cpf,
                 produtoCarrinhoDTO.getEstoqueProdutorId(),
                 produtoCarrinhoDTO.getQuantidade()
         ) ;
