@@ -13,7 +13,6 @@ import lombok.*;
 @Table(name = "tb_categoria_produto")
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoriaProduto {

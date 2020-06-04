@@ -30,4 +30,11 @@ public class ConsumidorController {
     @CrossOrigin
     @PostMapping("/consumidor")
     public ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con) { return cons.cadastraConsumidor(con); }
+    
+    @CrossOrigin
+    @DeleteMapping("/consumidor/{id}")
+    public void deletaConsumidor(@PathVariable(value = "id") String id) {
+    	
+    	cons.deletarConsumidor(id);
+    }
 }

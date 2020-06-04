@@ -1,5 +1,6 @@
 package br.com.livresbs.livres.model;
 
+import br.com.livresbs.livres.dto.ConsumidorDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

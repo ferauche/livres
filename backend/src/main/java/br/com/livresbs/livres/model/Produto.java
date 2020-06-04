@@ -2,8 +2,15 @@ package br.com.livresbs.livres.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_produto")
@@ -21,8 +28,8 @@ public class Produto {
     @NotBlank
 	private String nome;
 
-    @NotBlank
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
 	private CategoriaProduto categoria;
 }
