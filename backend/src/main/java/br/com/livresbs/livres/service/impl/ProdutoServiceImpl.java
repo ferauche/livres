@@ -87,17 +87,29 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina) {
+	public ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(
+			String cpf,
+			Integer pagina,
+			List<String> categorias
+	) {
 
 		DataEntrega dataEntrega = dataEntregaRepository.encontrarDataEntregaAtivaConsumidor(cpf);
 
-		Page<EstoqueProdutor> estoques = estoqueProdutorRepository.findByDatasEntrega(
-			dataEntrega,
-			PageRequest.of(
+		PageRequest pageRequest = PageRequest.of(
 				pagina.intValue() - 1,
 				applicationProperty.getQuantidadeIntesPagina()
-			)
 		);
+
+		Page<EstoqueProdutor> estoques;
+
+		if (null != categorias && !categorias.isEmpty())
+			estoques = estoqueProdutorRepository.findByDatasEntregaAndProdutoCategoriaNomeIn(
+				dataEntrega,
+				categorias,
+				pageRequest
+			);
+		else
+			estoques = estoqueProdutorRepository.findByDatasEntrega(dataEntrega, pageRequest);
 
 		List<ProdutoDisponivelDTO> produtos = new ArrayList<>(applicationProperty.getQuantidadeIntesPagina());
 

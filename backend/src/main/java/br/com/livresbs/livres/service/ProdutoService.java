@@ -18,6 +18,6 @@ public interface ProdutoService {
 	Produto editar(@RequestBody Produto produto);
 	void excluir(@PathVariable Produto produto);
 
-	ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina);
+	ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina, List<String> categorias);
 
 }
