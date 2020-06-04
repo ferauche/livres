@@ -18,24 +18,20 @@ import br.com.livresbs.livres.service.CategoriaService;
 import br.com.livresbs.livres.service.ProdutoService;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/produto")
 public class ProdutoController {
-
-
 
     @Autowired
     private ProdutoService produtoService;
 
 
-    @GetMapping("/produtodisponivel")
+    @GetMapping()
     public ProdutosDisponiveisDTO getProdutosDisponiveisVendaByCategoria (
             @RequestHeader(value = "cpf") String cpf,
             @RequestParam(value = "pagina") Integer numeroPagina,
             @RequestParam(value = "categorias", required = false) List<String> categorias
     ) {
-
         return produtoService.listarProdutosDisponiveisCompraConsumidor(cpf, numeroPagina, categorias);
-
     }
 
     @CrossOrigin
@@ -51,7 +47,7 @@ public class ProdutoController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/produto/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletaProduto(@PathVariable(value = "id") Integer id){
         return produtoService.deletarProduto(id);
     }
