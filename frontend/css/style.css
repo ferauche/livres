@@ -1,0 +1,11 @@
+.main-navbar{
+	z-index: 998;
+}
+
+.main-menu{
+	z-index: 999;
+}
+
+.pt-80{
+	padding-top: 85px !important;
+}
