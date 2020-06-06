@@ -10,5 +10,7 @@ import java.util.List;
 public class ProdutosDisponiveisDTO {
 
     private List<ProdutoDisponivelDTO> produtos;
+    private Integer paginaAtual;
+    private Integer totalPaginas;
 
 }
