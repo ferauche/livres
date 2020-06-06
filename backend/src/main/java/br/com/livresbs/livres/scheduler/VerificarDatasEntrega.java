@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class VerificarDatasEntrega {
 
-    private static final String PERIODO_TODO_DIA_MEIA_NOITE = "0 0 0 ? * * *";
+    private static final String PERIODO_TODO_DIA_MEIA_NOITE = "0 0 0 * * *";
 
     @Autowired
     private DataEntregaRepository dataEntregaRepository;
