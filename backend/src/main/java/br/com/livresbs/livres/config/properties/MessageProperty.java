@@ -16,4 +16,7 @@ public class MessageProperty {
     @Value("${header.nulo}")
     private String menssagemHeaderNulo;
 
+    @Value("${carrinho.vazio}")
+    private String menssagemCarrinhoVazio;
+
 }

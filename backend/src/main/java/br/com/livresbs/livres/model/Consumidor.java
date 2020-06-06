@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_consumidor")
@@ -35,7 +36,12 @@ public class Consumidor {
     
     private PreComunidade precomunidade;
 
-	
-    
+    @ManyToMany
+    @JoinTable(
+        name = "consumidor_endereco",
+        joinColumns = @JoinColumn(name = "consumidor_id"),
+        inverseJoinColumns = @JoinColumn(name = "endereco_id")
+    )
+    private List<EnderecoEntrega> enderecos;
     
 }

@@ -1,27 +1,28 @@
 package br.com.livresbs.livres.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-
-import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tb_categoria_produto")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaProduto {
-	
+public class TipoEntrega {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-    
-    @NotBlank
-	private String nome;
+    private Integer id;
+
+    private String nome;
+    private BigDecimal valorFrete;
 
 }
