@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,17 +79,24 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 
     @Override
     public CarrinhoDTO listarCarrinhos(String cpf) {
+
         List<Carrinho> carrinhos = new ArrayList<>(repositoryCarrinho.findByConsumidorCpf(cpf));
-        CarrinhoDTO carrinhoDTO = null;
+        List<ProdutoCarrinhoDTO> produtos = new LinkedList<ProdutoCarrinhoDTO>();
+
         carrinhos.forEach(carrinho -> {
+
             ProdutoCarrinhoDTO produtoCarrinhoDTO = ProdutoCarrinhoDTO.builder()
                     .estoqueProdutorId(carrinho.getEstoqueProdutor().getProduto().getId())
                     .quantidade(carrinho.getQuantidade())
                     .build();
 
-            carrinhoDTO.produtos.add(produtoCarrinhoDTO);
+            produtos.add(produtoCarrinhoDTO);
+
         });
 
-        return carrinhoDTO;
+        return CarrinhoDTO.builder()
+                .produtos(produtos)
+                .build();
+
     }
 }
