@@ -1,7 +1,13 @@
-import Lista from "./components/Lista.vue";
-import Formulario from "./components/Form.vue";
+import Lista from "./components/Lista";
+import CadConsumidores from "./components/CadConsumidores";
+import CadPreComunidade from "./components/CadPreComunidade";
+import Produtos from "./components/LstProdutos";
+import Checkout from "./components/Checkout";
 
 export default [
   { path: "/", component: Lista },
-  { path: "/form", component: Formulario },
+  { path: "/cadconsumidor", component: CadConsumidores },
+  { path: "/cadprecomunidade", component: CadPreComunidade },
+  { path: "/produtos", component: Produtos },
+  { path: "/checkout", component: Checkout },
 ];

@@ -3,7 +3,7 @@
     <com-side-bar></com-side-bar>
     <com-menu></com-menu>
     <div class="container pt-5 pt-80">
-      <app-tester></app-tester>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -11,11 +11,9 @@
 <script>
 import ComSideBar from "./components/ComSideBar";
 import ComMenu from "./components/ComMenu";
-import Tester from "./components/CadConsumidores";
 
 export default {
   components: {
-    "app-tester": Tester,
     "com-side-bar": ComSideBar,
     "com-menu": ComMenu,
   },
