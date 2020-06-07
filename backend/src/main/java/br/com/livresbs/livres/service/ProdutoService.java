@@ -18,8 +18,6 @@ public interface ProdutoService {
 	ResponseEntity<String> cadastrar(@RequestBody ProdutoDTO produto);
 	Produto editar(@RequestBody Produto produto);
 	void excluir(@PathVariable Produto produto);
-
-	ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(String cpf, Integer pagina, List<String> categorias);
-
 	ResponseEntity<String> deletarProduto(Integer id);
+
 }

@@ -1,30 +1,20 @@
 package br.com.livresbs.livres.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import br.com.livresbs.livres.dto.ProdutoDTO;
+import br.com.livresbs.livres.model.CategoriaProduto;
+import br.com.livresbs.livres.model.Produto;
+import br.com.livresbs.livres.repository.CategoriaRepository;
+import br.com.livresbs.livres.repository.ProdutoRepository;
+import br.com.livresbs.livres.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import br.com.livresbs.livres.config.properties.ApplicationProperty;
-import br.com.livresbs.livres.dto.ProdutoDisponivelDTO;
-import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
-import br.com.livresbs.livres.model.CategoriaProduto;
-import br.com.livresbs.livres.model.DataEntrega;
-import br.com.livresbs.livres.model.EstoqueProdutor;
-import br.com.livresbs.livres.model.Produto;
-import br.com.livresbs.livres.repository.CategoriaRepository;
-import br.com.livresbs.livres.repository.DataEntregaRepository;
-import br.com.livresbs.livres.repository.EstoqueProdutorRepository;
-import br.com.livresbs.livres.repository.ProdutoRepository;
-import br.com.livresbs.livres.service.ProdutoService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -34,15 +24,6 @@ public class ProdutoServiceImpl implements ProdutoService {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepo;
-	
-	@Autowired
-	private EstoqueProdutorRepository estoqueProdutorRepository;
-
-	@Autowired
-	private ApplicationProperty applicationProperty;
-
-	@Autowired
-	private DataEntregaRepository dataEntregaRepository;
 
 	@Override
 	public List<ProdutoDTO> listaProdutos() {
@@ -90,52 +71,6 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	public void excluir(Produto produto) {
 		produtoRepo.delete(produto);
-	}
-
-	@Override
-	public ProdutosDisponiveisDTO listarProdutosDisponiveisCompraConsumidor(
-			String cpf,
-			Integer pagina,
-			List<String> categorias
-	) {
-
-		DataEntrega dataEntrega = dataEntregaRepository.encontrarDataEntregaAtivaConsumidor(cpf);
-
-		PageRequest pageRequest = PageRequest.of(
-				pagina.intValue() - 1,
-				applicationProperty.getQuantidadeIntesPagina()
-		);
-
-		Page<EstoqueProdutor> estoques;
-
-		if (null != categorias && !categorias.isEmpty())
-			estoques = estoqueProdutorRepository.findByDatasEntregaAndProdutoCategoriaNomeIn(
-				dataEntrega,
-				categorias,
-				pageRequest
-			);
-		else
-			estoques = estoqueProdutorRepository.findByDatasEntrega(dataEntrega, pageRequest);
-
-		List<ProdutoDisponivelDTO> produtos = new ArrayList<>(applicationProperty.getQuantidadeIntesPagina());
-
-		estoques.forEach(estoqueProdutor -> {
-
-			ProdutoDisponivelDTO produtoDisponivel = ProdutoDisponivelDTO.builder()
-					.estoqueId(estoqueProdutor.getId())
-					.nome(estoqueProdutor.getProduto().getNome())
-					.preco(estoqueProdutor.getPreco().doubleValue())
-					.categoria(estoqueProdutor.getProduto().getCategoria().getNome())
-					.build();
-
-			produtos.add(produtoDisponivel);
-
-		});
-
-		return ProdutosDisponiveisDTO.builder()
-				.produtos(produtos)
-				.build();
-
 	}
 
 	@Override
