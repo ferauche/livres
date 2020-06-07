@@ -1,34 +1,21 @@
 <template>
   <div>
-    <app-header></app-header>
-    <app-form></app-form>
-    <app-lista></app-lista>
-    <app-footer></app-footer>
+    <com-side-bar></com-side-bar>
+    <com-menu></com-menu>
+    <div class="container pt-5 pt-80">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
-import Form from "./components/Form";
-import Lista from "./components/Lista";
-import Footer from "./components/Footer";
+import ComSideBar from "./components/ComSideBar";
+import ComMenu from "./components/ComMenu";
 
 export default {
   components: {
-    "app-header": Header,
-    "app-lista": Lista,
-    "app-footer": Footer,
-    "app-form": Form
-  }
+    "com-side-bar": ComSideBar,
+    "com-menu": ComMenu,
+  },
 };
 </script>
-
-<style>
-.livres-primary {
-  background: #41b1e0;
-}
-
-.livres-segundary {
-  background: #c27351;
-}
-</style>
