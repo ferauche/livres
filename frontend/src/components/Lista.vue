@@ -26,13 +26,17 @@ import Consumidores from "../services/consumidores";
 export default {
   data() {
     return {
-      consumidores: []
+      consumidores: [],
     };
   },
   mounted() {
-    Consumidores.listar().then(result => {
-      this.consumidores = result.data;
-    });
-  }
+    Consumidores.listar()
+      .then((result) => {
+        this.consumidores = result.data;
+      })
+      .catch(() => {
+        alert("Erro ao carregar lista");
+      });
+  },
 };
 </script>

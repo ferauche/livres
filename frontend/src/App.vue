@@ -1,25 +1,20 @@
 <template>
   <div>
     <app-header></app-header>
-    <app-form></app-form>
-    <app-lista></app-lista>
+    <router-view></router-view>
     <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
-import Form from "./components/Form";
-import Lista from "./components/Lista";
 import Footer from "./components/Footer";
 
 export default {
   components: {
     "app-header": Header,
-    "app-lista": Lista,
     "app-footer": Footer,
-    "app-form": Form
-  }
+  },
 };
 </script>
 
