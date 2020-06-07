@@ -1,0 +1,15 @@
+import { http } from "./config";
+
+export default {
+  listar: () => {
+    return http.get("/api/consumidor");
+  },
+
+  salvar: (consumidor) => {
+    return http.post("api/consumidor/", consumidor);
+  },
+
+  buscarPorCpf: (cpf) => {
+    return http.get("api/consumidor/" + cpf);
+  },
+};

@@ -1,6 +1,5 @@
 import axios from "axios";
 
 export const http = axios.create({
-  // Placeholder
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "http://35.188.130.149:8080/",
 });

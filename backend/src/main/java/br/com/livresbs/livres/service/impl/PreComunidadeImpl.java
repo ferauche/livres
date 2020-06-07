@@ -27,4 +27,11 @@ public class PreComunidadeImpl implements PreComunidadeService {
         return pcr.save(pc);
     }
 
+
+	public PreComunidade editaPreComunidade(PreComunidade pc) {
+		return pcr.save(pc);
+	}
+
+
+
 }
