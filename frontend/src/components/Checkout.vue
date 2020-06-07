@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col" v-show="step === 1">
+    <div class="col-8 offset-md-2" v-show="step === 1">
       <div class="card">
         <div class="card-header">
           Carrinho
@@ -16,16 +16,14 @@
               <thead class="">
                 <tr>
                   <th class="th-sm">Nome</th>
-                  <th class="th-sm">Categoria</th>
-                  <th class="th-sm">Quantidade</th>
+                  <th class="th-sm text-right">Quantidade</th>
                   <th class="th-sm text-right">Preço</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="produto in produtos" :key="produto.id">
                   <td>{{ produto.nome }}</td>
-                  <td>{{ produto.categoria }}</td>
-                  <td class="text-right">{{ produto.qtd }}</td>
+                  <td class="text-right">{{ produto.quantidade }}</td>
                   <td class="text-right">{{ produto.preco }}</td>
                 </tr>
               </tbody>
@@ -309,7 +307,6 @@
                   <thead class="">
                     <tr>
                       <th class="th-sm">Nome</th>
-                      <th class="th-sm">Categoria</th>
                       <th class="th-sm">Quantidade</th>
                       <th class="th-sm text-right">Preço</th>
                     </tr>
@@ -317,7 +314,6 @@
                   <tbody>
                     <tr v-for="produto in produtos" :key="produto.id">
                       <td>{{ produto.nome }}</td>
-                      <td>{{ produto.categoria }}</td>
                       <td class="text-right">{{ produto.qtd }}</td>
                       <td class="text-right">{{ produto.preco }}</td>
                     </tr>
@@ -347,6 +343,8 @@
 </template>
 
 <script>
+import loja from "@/services/loja.js";
+
 export default {
   data() {
     return {
@@ -363,25 +361,28 @@ export default {
       complemento: "",
       modalidadePagamento: "",
       formaPagamento: "",
-      produtos: [
-        {
-          nome: "Prod1",
-          categoria: "Cat1",
-          preco: "R$ 99,99",
-          qtd: 10,
-        },
-        {
-          nome: "Prod2",
-          categoria: "Cat7",
-          preco: "R$ 13,99",
-          qtd: 12,
-        },
-      ],
+      produtos: [],
       modalidadesPagamento: [],
       formasPagamento: [],
     };
   },
+      created() {
+        const that = this;
+        loja.checkout(191)
+          .then(response => {
+            that.produtos = response.data.produtos;
+          })
+    },
+    methods: {
+        prev() {
+            this.step--;
+        },
+        next() {
+            this.step++;
+        },
+        finalizarPedido() {
+          this.$toaster.error("Função não implementada");
+        }
+    },
 };
 </script>
-
-<style></style>

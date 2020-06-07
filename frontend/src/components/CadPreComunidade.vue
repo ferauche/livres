@@ -3,7 +3,7 @@
     <div class="col-6 offset-md-3">
       <div class="card">
         <div class="card-header">
-          Cadastro de Consumidores
+          Cadastro de Pre Comunidade
         </div>
         <div class="card-body">
           <form>
@@ -17,13 +17,15 @@
               />
               <label for="nome">Nome</label>
             </div>
-            <button
-              type="button"
-              class="btn btn-primary pull-right"
-              @click="cadastrar()"
-            >
-              <i class="fa fa-floppy-o"></i> Cadastrar
-            </button>
+              <div class="text-right">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="cadastrar()"
+                >
+                <i class="fa fa-floppy-o"></i> Cadastrar
+                </button>
+              </div>
             <pre>Data: {{ $data }}</pre>
           </form>
         </div>

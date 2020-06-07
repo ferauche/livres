@@ -6,7 +6,7 @@ export default {
   },
 
   salvar: (consumidor) => {
-    return http.post("api/consumidor", consumidor);
+    return http.post("api/consumidor/", consumidor);
   },
 
   buscarPorCpf: (cpf) => {

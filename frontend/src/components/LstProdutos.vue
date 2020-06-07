@@ -6,28 +6,6 @@
           Lista de Produtos
         </div>
         <div class="card-body">
-          <div class="pt-2"></div>
-          <div class="select">
-            <select
-              class="select-text"
-              required
-              v-model.trim="produtor"
-              @change="changeProdutor()"
-            >
-              <option disabled selected></option>
-              <option
-                v-for="option in produtores"
-                :key="option.id"
-                v-bind:value="option.id"
-              >
-                {{ option.value }}
-              </option>
-            </select>
-            <span class="select-highlight"></span>
-            <span class="select-bar"></span>
-            <label class="select-label">Escolha um Produtor:</label>
-          </div>
-          <div class="pt-3"></div>
           <div class="table-responsive">
             <table
               id="dtBasicExample"
@@ -68,9 +46,9 @@
             </table>
           </div>
           <div class="row">
-            <div class="col">
+            <div class="col text-right">
               <button
-                class="btn btn-primary pull-right"
+                class="btn btn-primary"
                 @click="$router.push('/checkout')"
               >
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i> Ir até
@@ -86,6 +64,8 @@
 </template>
 
 <script>
+import loja from "@/services/loja.js";
+
 export default {
   data() {
     return {
@@ -94,6 +74,28 @@ export default {
       produtores: [],
     };
   },
+  created() {
+      const that = this;
+      loja.getProdutosDisponiveisVendaByCategoria(191)
+        .then(response => {
+          that.produtos = response.data.produtos;
+        });
+  },
+   methods: {
+        validarQtdProdEscolhido(produto) {
+            produto.qtd = Math.abs(produto.qtd);
+
+            if (produto.qtd > produto.qtdEstoque)
+                produto.qtd = produto.qtdEstoque;
+        },
+        updateCarrinho(produto) {
+          const that = this;
+          loja.sincronizarProduto(191, produto.estoqueId, produto.qtd)
+            .then(()=>{
+                that.$toaster.success("Carrinho atualizado!");
+            });
+        }
+    },
 };
 </script>
 

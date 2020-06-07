@@ -29,13 +29,16 @@ export default {
       consumidores: [],
     };
   },
+  created(){
+  
+  },
   mounted() {
     Consumidores.listar()
       .then((result) => {
         this.consumidores = result.data;
       })
       .catch(() => {
-        alert("Erro ao carregar lista");
+        this.$toaster.error("Erro ao carregar lista");
       });
   },
 };

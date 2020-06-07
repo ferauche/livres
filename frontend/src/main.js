@@ -3,7 +3,11 @@ import VueRouter from "vue-router";
 import App from "./App.vue";
 import Routes from "./routes";
 
+import Toaster from 'v-toaster'
+import 'v-toaster/dist/v-toaster.css'
+
 Vue.use(VueRouter);
+Vue.use(Toaster, {timeout: 5000})
 
 const router = new VueRouter({
   routes: Routes,
