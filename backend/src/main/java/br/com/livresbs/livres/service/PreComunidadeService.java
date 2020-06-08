@@ -13,4 +13,6 @@ public interface PreComunidadeService {
     PreComunidade listaPreComunidadeUnica(@PathVariable(value = "id") long id);
 
     PreComunidade cadastraPreComunidade(@RequestBody PreComunidade pc);
+    
+    PreComunidade editaPreComunidade(@RequestBody PreComunidade pc);
 }
