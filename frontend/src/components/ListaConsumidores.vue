@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h2>Consumidores</h2>
+
     <table class="container table">
       <thead class="thead">
         <tr>

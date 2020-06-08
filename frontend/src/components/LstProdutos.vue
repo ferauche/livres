@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-md-8 col-sm-12 offset-md-2">
       <div class="card">
-        <div class="card-header">
-          Lista de Produtos
-        </div>
+        <div class="card-header">Lista de Produtos</div>
         <div class="card-body">
           <div class="table-responsive">
             <table
@@ -48,15 +46,12 @@
           </div>
           <div class="row">
             <div class="col">
-             <!-- :click-handler="buscarProdutosPorPagina()" -->
+              <!-- :click-handler="buscarProdutosPorPagina()" -->
             </div>
           </div>
           <div class="row">
             <div class="col text-right">
-              <button
-                class="btn btn-primary"
-                @click="$router.push('/checkout')"
-              >
+              <button class="btn btn-primary" @click="$router.push('/carinho')">
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i> Ir até
                 o Carrinho
               </button>
@@ -81,62 +76,70 @@ export default {
     };
   },
   created() {
-      const that = this;
-      loja.listarCarrinhos(191)
-        .then(response => {
-          const carrinho = response.data.produtos;
-          loja.getProdutosDisponiveisVendaByCategoria(191)
-            .then(response => {
-              that.produtos = response.data.produtos;
-              that.produtos
-                .map(p => p.preco = "R$ "+ p.preco
-                   .toLocaleString("pt-BR", { 
-                      maximumFractionDigits: 2, 
-                      minimumFractionDigits: 2 
-                   })
-                );
+    const that = this;
+    loja.listarCarrinhos(191).then(response => {
+      const carrinho = response.data.produtos;
+      loja.getProdutosDisponiveisVendaByCategoria(191).then(response => {
+        that.produtos = response.data.produtos;
+        that.produtos.map(
+          p =>
+            (p.preco =
+              "R$ " +
+              p.preco.toLocaleString("pt-BR", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+              }))
+        );
 
-              that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
-            });
-
-        });
+        that.produtos.map(
+          p =>
+            (p.qtd = carrinho.find(
+              c => c.estoqueProdutorId === p.estoqueId
+            ).quantidade)
+        );
+      });
+    });
   },
-   methods: {
-        buscarProdutosPorPagina(){
-          const that = this;
-          loja.listarCarrinhos(191)
-            .then(response => {
-              const carrinho = response.data.produtos;
-              loja.getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
-                .then(response => {
-                  that.produtos = response.data.produtos;
-                  that.produtos
-                    .map(p => p.preco = "R$ "+ p.preco
-                       .toLocaleString("pt-BR", { 
-                          maximumFractionDigits: 2, 
-                          minimumFractionDigits: 2 
-                       })
-                    );
+  methods: {
+    buscarProdutosPorPagina() {
+      const that = this;
+      loja.listarCarrinhos(191).then(response => {
+        const carrinho = response.data.produtos;
+        loja
+          .getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
+          .then(response => {
+            that.produtos = response.data.produtos;
+            that.produtos.map(
+              p =>
+                (p.preco =
+                  "R$ " +
+                  p.preco.toLocaleString("pt-BR", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2
+                  }))
+            );
 
-                  that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
-                });
-
-            });
-        },
-        validarQtdProdEscolhido(produto) {
-            produto.qtd = Math.abs(produto.qtd);
-
-            if (produto.qtd > produto.qtdEstoque)
-                produto.qtd = produto.qtdEstoque;
-        },
-        updateCarrinho(produto) {
-          const that = this;
-          loja.sincronizarProduto(191, produto.estoqueId, produto.qtd)
-            .then(()=>{
-                that.$toaster.success("Carrinho atualizado!");
-            });
-        }
+            that.produtos.map(
+              p =>
+                (p.qtd = carrinho.find(
+                  c => c.estoqueProdutorId === p.estoqueId
+                ).quantidade)
+            );
+          });
+      });
     },
+    validarQtdProdEscolhido(produto) {
+      produto.qtd = Math.abs(produto.qtd);
+
+      if (produto.qtd > produto.qtdEstoque) produto.qtd = produto.qtdEstoque;
+    },
+    updateCarrinho(produto) {
+      const that = this;
+      loja.sincronizarProduto(191, produto.estoqueId, produto.qtd).then(() => {
+        that.$toaster.success("Carrinho atualizado!");
+      });
+    }
+  }
 };
 </script>
 

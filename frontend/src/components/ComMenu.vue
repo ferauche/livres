@@ -17,29 +17,29 @@ export default {
     return {
       items: [
         {
-          icon: "fa fa-hashtag fa-2x",
+          icon: "fa fa-home fa-2x",
           name: "Home",
           href: "/"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
-          name: "Cad Precomunidade",
-          href: "/cadprecomunidade"
+          icon: "fa fa-users fa-2x",
+          name: "Pré-comunidade",
+          href: "/precomunidades"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
+          icon: "fa fa-user fa-2x",
           name: "Consumidores",
           href: "/consumidores"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
+          icon: "fa fa-shopping-basket fa-2x",
           name: "Produtos",
           href: "/produtos"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
-          name: "Checkout",
-          href: "/checkout"
+          icon: "fa fa-shopping-cart fa-2x",
+          name: "Carinho",
+          href: "/carinho"
         }
       ]
     };
