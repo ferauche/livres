@@ -35,13 +35,13 @@ public class ProdutoController {
     }
 
     @CrossOrigin
-    @PostMapping("/produto")
+    @PostMapping("/cadastrar")
     public ResponseEntity<String> cadastraProduto(@RequestBody ProdutoDTO produto) {
     	return produtoService.cadastrar(produto);
     }
 
     @CrossOrigin
-    @GetMapping("/produto")
+    @GetMapping("/listar")
     public List<ProdutoDTO> listaProdutos(@RequestBody ProdutoDTO produto) {
         return produtoService.listaProdutos();
     }

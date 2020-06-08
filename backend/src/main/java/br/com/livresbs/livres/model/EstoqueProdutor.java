@@ -2,16 +2,17 @@ package br.com.livresbs.livres.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import lombok.*;
 
+@Data
 @Entity
 @Table(name = "tb_estoque_produtor")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
