@@ -36,38 +36,21 @@
       <i class="fas fa-plus"></i>
     </router-link>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="deletarModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="deletarModal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="tituloModal">Excluir</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">Tem certeza que deseja excluir este consumidor?</div>
-          <div class="modal-footer">
-            <button type="button" class="btn" data-dismiss="modal">Não</button>
-            <button type="button" class="btn btn-danger">Sim</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <com-modal-delete
+      mensagem="Deseja excluir este consumidor?"
+      v-on:confirmar="ExcluirConsumidor"
+    />
   </div>
 </template>
 
 <script>
 // import Consumidores from "../services/consumidores";
+import modalDelete from "./modalDelete";
 
 export default {
+  components: {
+    "com-modal-delete": modalDelete
+  },
   data() {
     return {
       consumidores: [
@@ -77,6 +60,11 @@ export default {
         { nome: "teste", sobrenome: "teste", cpf: "teste", precomunidade: 1 }
       ]
     };
+  },
+  methods: {
+    ExcluirConsumidor: function() {
+      this.$toaster.error("Consumidor Removido com sucesso");
+    }
   },
   created() {},
   mounted() {
