@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-8 offset-md-2">
+    <div class="col-md-8 col-sm-12 offset-md-2">
       <div class="card">
         <div class="card-header">
           Lista de Produtos
@@ -31,6 +31,7 @@
                   <td class="text-right">{{ produto.preco }}</td>
                   <td style="cursor: pointer;" class="text-center">
                     <input
+                      class="form-control form-control-sm text-right"
                       autocomplete="off"
                       type="number"
                       min="0"
@@ -46,6 +47,11 @@
             </table>
           </div>
           <div class="row">
+            <div class="col">
+             <!-- :click-handler="buscarProdutosPorPagina()" -->
+            </div>
+          </div>
+          <div class="row">
             <div class="col text-right">
               <button
                 class="btn btn-primary"
@@ -56,13 +62,11 @@
               </button>
             </div>
           </div>
-          <pre>Data: {{ $data }}</pre>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import loja from "@/services/loja.js";
 
@@ -72,16 +76,53 @@ export default {
       produtor: "",
       produtos: [],
       produtores: [],
+      currentPage: 0,
+      pageCount: 0
     };
   },
   created() {
       const that = this;
-      loja.getProdutosDisponiveisVendaByCategoria(191)
+      loja.listarCarrinhos(191)
         .then(response => {
-          that.produtos = response.data.produtos;
+          const carrinho = response.data.produtos;
+          loja.getProdutosDisponiveisVendaByCategoria(191)
+            .then(response => {
+              that.produtos = response.data.produtos;
+              that.produtos
+                .map(p => p.preco = "R$ "+ p.preco
+                   .toLocaleString("pt-BR", { 
+                      maximumFractionDigits: 2, 
+                      minimumFractionDigits: 2 
+                   })
+                );
+
+              that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
+            });
+
         });
   },
    methods: {
+        buscarProdutosPorPagina(){
+          const that = this;
+          loja.listarCarrinhos(191)
+            .then(response => {
+              const carrinho = response.data.produtos;
+              loja.getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
+                .then(response => {
+                  that.produtos = response.data.produtos;
+                  that.produtos
+                    .map(p => p.preco = "R$ "+ p.preco
+                       .toLocaleString("pt-BR", { 
+                          maximumFractionDigits: 2, 
+                          minimumFractionDigits: 2 
+                       })
+                    );
+
+                  that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
+                });
+
+            });
+        },
         validarQtdProdEscolhido(produto) {
             produto.qtd = Math.abs(produto.qtd);
 

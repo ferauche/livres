@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-8 offset-md-2" v-show="step === 1">
+    <div class="col-md-8 offset-md-2" v-show="step === 1">
       <div class="card">
         <div class="card-header">
           Carrinho
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="col-8 offset-md-2" v-show="step === 2">
+    <div class="col-md-8 offset-md-2" v-show="step === 2">
       <div class="card">
         <div class="card-header">
           Dados de Entrega
@@ -66,6 +66,7 @@
                     id="cep"
                     class="form-control"
                     v-model.trim="cep"
+                    @blur="buscaPorCep()"
                   />
                   <label for="cep">CEP</label>
                 </div>
@@ -79,7 +80,7 @@
                     class="form-control"
                     v-model.trim="estado"
                   />
-                  <label for="estado">Estado</label>
+                  <label for="estado" :class="{ 'active': estado }">Estado</label>
                 </div>
               </div>
               <div class="col-md-4">
@@ -91,7 +92,7 @@
                     class="form-control"
                     v-model.trim="cidade"
                   />
-                  <label for="cidade">Cidade</label>
+                  <label for="cidade" :class="{ 'active': cidade }">Cidade</label>
                 </div>
               </div>
               <div class="col-md-4">
@@ -103,7 +104,7 @@
                     class="form-control"
                     v-model.trim="bairro"
                   />
-                  <label for="bairro">Bairro</label>
+                  <label for="bairro" :class="{ 'active': bairro }">Bairro</label>
                 </div>
               </div>
             </div>
@@ -117,7 +118,7 @@
                     class="form-control"
                     v-model.trim="endereco"
                   />
-                  <label for="endereco">Endereço</label>
+                  <label for="endereco" :class="{ 'active': endereco }">Endereço</label>
                 </div>
               </div>
               <div class="col-md-2">
@@ -153,12 +154,11 @@
                 Continuar <i class="fa fa-share"></i>
               </button>
             </div>
-            <pre>Data: {{ $data }}</pre>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-8 offset-md-2" v-show="step === 3">
+    <div class="col-md-8 offset-md-2" v-show="step === 3">
       <div class="card">
         <div class="card-header">
           Método de Pagamento
@@ -170,32 +170,32 @@
               <select
                 class="select-text"
                 required
-                v-model="modalidadePagamento"
+                v-model="metodoPagamento"
               >
                 <option disabled selected></option>
                 <option
-                  v-for="option in modalidadesPagamento"
-                  v-bind:value="option.id"
-                  :key="option.id"
+                  v-for="option in metodosPagamento"
+                  v-bind:value="option.nome"
+                  :key="option.nome"
                 >
-                  {{ option.value }}
+                  {{ option.nome }}
                 </option>
               </select>
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
-              <label class="select-label">Modalidade de Pagamento:</label>
+              <label class="select-label">Metodo de Pagamento:</label>
             </div>
             <div class="pt-3"></div>
             <div class="pt-3"></div>
-            <div class="select" v-show="modalidadePagamento">
-              <select class="select-text" required v-model="formaPagamento">
+            <div class="select" v-show="metodoPagamento">
+              <select class="select-text" required v-model="meioPagamento">
                 <option disabled selected></option>
                 <option
-                  v-for="option in formasPagamento"
-                  v-bind:value="option.id"
-                  :key="option.id"
+                  v-for="option in getMeiosPagamento()"
+                  v-bind:value="option"
+                  :key="option"
                 >
-                  {{ option.value }} </option
+                  {{ option }} </option
                 >>
               </select>
               <span class="select-highlight"></span>
@@ -207,16 +207,15 @@
               <button type="button" class="btn btn-primary" @click="prev()">
                 Voltar <i class="fa fa-reply"></i>
               </button>
-              <button type="button" class="btn btn-primary" @click="next()">
+              <button type="button" class="btn btn-primary" @click="next()" :disabled="!meioPagamento">
                 Continuar <i class="fa fa-share"></i>
               </button>
             </div>
-            <pre>Data: {{ $data }}</pre>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-8 offset-md-2" v-show="step === 4">
+    <div class="col-md-8 offset-md-2" v-show="step === 4">
       <div class="card">
         <div class="card-header">
           Resumo do Pedido
@@ -282,13 +281,13 @@
               <div class="row">
                 <label class="col"
                   ><span class="font-weight-bold">Modalidade:</span>
-                  {{ modalidadePagamento }}</label
+                  {{ metodoPagamento }}</label
                 >
               </div>
               <div class="row">
                 <label class="col"
                   ><span class="font-weight-bold">Método:</span>
-                  {{ formaPagamento }}</label
+                  {{ meioPagamento }}</label
                 >
               </div>
             </div>
@@ -314,7 +313,7 @@
                   <tbody>
                     <tr v-for="produto in produtos" :key="produto.id">
                       <td>{{ produto.nome }}</td>
-                      <td class="text-right">{{ produto.qtd }}</td>
+                      <td class="text-right">{{ produto.quantidade }}</td>
                       <td class="text-right">{{ produto.preco }}</td>
                     </tr>
                   </tbody>
@@ -335,7 +334,6 @@
               <i class="fa fa-shopping-cart"></i> Finalizar Pedido
             </button>
           </div>
-          <pre>Data: {{ $data }}</pre>
         </div>
       </div>
     </div>
@@ -344,13 +342,14 @@
 
 <script>
 import loja from "@/services/loja.js";
+import viacep from "@/services/viacep.js"
 
 export default {
   data() {
     return {
       step: 1,
       produtor: "",
-      valorTotal: "R$ 800.000,00",
+      valorTotal: "",
       nome: "",
       cep: "",
       estado: "",
@@ -359,11 +358,10 @@ export default {
       endereco: "",
       numero: "",
       complemento: "",
-      modalidadePagamento: "",
-      formaPagamento: "",
+      metodoPagamento: "",
+      meioPagamento: "",
       produtos: [],
-      modalidadesPagamento: [],
-      formasPagamento: [],
+      metodosPagamento: [],
     };
   },
       created() {
@@ -371,14 +369,47 @@ export default {
         loja.checkout(191)
           .then(response => {
             that.produtos = response.data.produtos;
+            that.produtos
+            .map(p => p.preco = "R$ "+ p.preco
+              .toLocaleString("pt-BR", { 
+                maximumFractionDigits: 2, 
+                minimumFractionDigits: 2 
+              }));
+
+            that.valorTotal = "R$ "+response.data.valorTotal
+                .toLocaleString("pt-BR", { 
+                  maximumFractionDigits: 2, 
+                   minimumFractionDigits: 2 
+                });
+
+            that.metodosPagamento = response.data.metodosPagamento;
           })
     },
     methods: {
+        buscaPorCep(){
+          const that = this;
+
+          viacep.buscaPorCep(this.cep)
+            .then(response => {
+                const data = response.data;
+                that.estado = data.uf;
+                that.cidade = data.localidade;
+                that.bairro = data.bairro;
+                that.endereco = data.logradouro;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        },
         prev() {
             this.step--;
         },
         next() {
             this.step++;
+        },
+        getMeiosPagamento(){
+          const metodo = this.metodosPagamento.find(m => m.nome === this.metodoPagamento);
+          return (metodo) ? metodo.meiosPagamento : [];
         },
         finalizarPedido() {
           this.$toaster.error("Função não implementada");

@@ -1,6 +1,13 @@
 import { http } from "./config";
 
 export default {
+    checkout: (cpf) => {
+        return http.get("/api/loja/pedidos", {
+            headers: {
+                cpf: cpf
+            }
+        });
+    },
 
     getProdutosDisponiveisVendaByCategoria: (cpf, pagina) => {
         return http.get("/api/loja/produtos", {
@@ -13,8 +20,8 @@ export default {
         });
     },
 
-    checkout: (cpf) => {
-        return http.get("/api/loja/pedidos", {
+    listarCarrinhos: (cpf) => {
+        return http.get("/api/loja/carrinhos", {
             headers: {
                 cpf: cpf
             }

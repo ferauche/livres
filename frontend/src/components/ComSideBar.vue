@@ -11,21 +11,33 @@
         alt=""
         loading="lazy"
       />
-      Livres?
+      Livres
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
       <ul class="navbar-nav my-2 my-lg-0">
+        <li class="nav-item">
+            <router-link to="/checkout"
+              class="nav-link"
+              id="navbarDropdownMenuLink"
+              role="button" 
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+            <i class="fa fa-shopping-cart badge-notification" data-badge="9" aria-hidden="true"></i>
+          </router-link>
+        </li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
+            <a
+              class="nav-link"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
             <i class="fa fa-user" aria-hidden="true"></i>
           </a>
         </li>

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-6 offset-md-3">
+    <div class="col-md-6 col-sm-12 offset-md-3">
       <div class="card">
         <div class="card-header">
           Cadastro de Pre Comunidade
@@ -26,7 +26,6 @@
                 <i class="fa fa-floppy-o"></i> Cadastrar
                 </button>
               </div>
-            <pre>Data: {{ $data }}</pre>
           </form>
         </div>
       </div>
