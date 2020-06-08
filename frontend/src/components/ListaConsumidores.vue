@@ -67,7 +67,7 @@ export default {
           this.consumidores = result.data;
         })
         .catch(() => {
-          this.$toaster.error("Erro ao carregar lista");
+          this.$toaster.error("Erro ao carregar lista de consumidores");
         });
     },
     ExcluirConsumidor: function() {

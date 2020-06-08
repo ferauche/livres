@@ -5,7 +5,7 @@ export default {
     return http.get("api/consumidor");
   },
 
-  salvar: (consumidor) => {
+  inserir: (consumidor) => {
     return http.post("api/consumidor/", consumidor);
   },
 
