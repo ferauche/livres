@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping
 public class ConsumidorController {
     @Autowired
     ConsumidorImpl cons;
