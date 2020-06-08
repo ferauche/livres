@@ -19,11 +19,10 @@ import lombok.*;
 public class Produtor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	@NotBlank
-	private String nome;
 	@NotBlank
 	private String cnpj;
+	@NotBlank
+	private String nome;
+	
 
 }

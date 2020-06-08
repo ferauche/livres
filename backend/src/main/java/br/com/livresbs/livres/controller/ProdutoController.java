@@ -2,6 +2,7 @@ package br.com.livresbs.livres.controller;
 
 import br.com.livresbs.livres.dto.ProdutoDTO;
 import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
+import br.com.livresbs.livres.model.Produto;
 import br.com.livresbs.livres.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,11 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletaProduto(@PathVariable(value = "id") Integer id){
         return produtoService.deletarProduto(id);
+    }
+    
+    @PutMapping
+    public Produto editaProduto(@RequestBody Produto produto) {
+    	return produtoService.editar(produto);
     }
 
 
