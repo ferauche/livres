@@ -16,7 +16,7 @@ import br.com.livresbs.livres.model.PreComunidade;
 import br.com.livresbs.livres.service.impl.PreComunidadeImpl;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping
 public class PreComunidadeController {
     @Autowired
     PreComunidadeImpl pcr;
