@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class VerificarDatasEntrega {
 
         List<DataEntrega> datasEntrega = dataEntregaRepository.findByStatus(StatusDataEntrega.ATIVA);
 
-        LocalDate dataAtual = LocalDate.now();
+        LocalDate dataAtual = LocalDate.now(Clock.systemUTC());
 
         for (DataEntrega dataEntrega : datasEntrega) {
 

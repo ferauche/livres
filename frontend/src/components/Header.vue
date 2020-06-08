@@ -13,13 +13,16 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse nav-collapse collapse" id="navbarSupportedContent">
+    <div
+      class="navbar-collapse nav-collapse collapse"
+      id="navbarSupportedContent"
+    >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link">Link 1</a>
+          <router-link to="/" class="nav-link">Lista</router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Link 2</a>
+          <router-link to="/form" class="nav-link">Form</router-link>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">Link 3</a>
