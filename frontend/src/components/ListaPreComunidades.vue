@@ -21,6 +21,7 @@
               type="button"
               data-toggle="modal"
               data-target="#deletarModal"
+              @click="IdentificarId(precomunidade.id)"
             >
               <i class="fas fa-trash-alt"></i>
             </a>
@@ -49,11 +50,12 @@ export default {
   },
   data() {
     return {
-      precomunidades: []
+      precomunidades: [],
+      idParaExclusao: 0
     };
   },
   methods: {
-    listarPreComunidades: function() {
+    ListarPreComunidades: function() {
       PreComunidades.listar()
         .then(result => {
           this.precomunidades = result.data;
@@ -63,11 +65,21 @@ export default {
         });
     },
     ExcluirPrecomunidade: function() {
-      this.$toaster.error("Não foi possível remover a pré-comunidade");
+      PreComunidades.delete(this.idParaExclusao)
+        .then(() => {
+          this.$toaster.success("Pré-comunidade removida com sucesso");
+          this.ListarPreComunidades();
+        })
+        .catch(() => {
+          this.$toaster.error("Não foi possível remover a pré-comunidade");
+        });
+    },
+    IdentificarId: function(_id) {
+      this.idParaExclusao = _id;
     }
   },
   mounted() {
-    this.listarPreComunidades();
+    this.ListarPreComunidades();
   }
 };
 </script>
