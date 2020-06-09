@@ -88,14 +88,12 @@ public class ConsumidorImpl implements ConsumidorService {
             }
 
             String senha = consumidor.getSenha();
-
-            String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
-
-            if (senha == "" || senha == null) {
+            if(senha == "" || senha == null) {
 
                 Consumidor con = Consumidor.builder()
                         .cpf(consumidor.getCpf())
                         .nome(consumidor.getNome())
+                        .senha(cons.findById(consumidor.getCpf()).get().getSenha())
                         .sobrenome(consumidor.getSobrenome())
                         .precomunidade(oppre.get())
                         .build();
@@ -103,6 +101,8 @@ public class ConsumidorImpl implements ConsumidorService {
                 cons.save(con);
             }
             else{
+
+                String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
                 Consumidor con = Consumidor.builder()
                         .cpf(consumidor.getCpf())
                         .nome(consumidor.getNome())
