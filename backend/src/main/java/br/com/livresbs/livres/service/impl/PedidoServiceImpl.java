@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         List<ProdutoCompradoDTO> produtos = new ArrayList<ProdutoCompradoDTO>();
-        Double valorTotal = 0.0D;
+        BigDecimal valorTotal = BigDecimal.ZERO;
 
         for (Carrinho itemCarrinho : itemsCarrinho) {
 
@@ -53,7 +54,11 @@ public class PedidoServiceImpl implements PedidoService {
                     .build()
             );
 
-            valorTotal += itemCarrinho.getEstoqueProdutor().getPreco().doubleValue();
+            valorTotal = valorTotal.add(
+                    itemCarrinho.getEstoqueProdutor().getPreco().multiply(
+                            new BigDecimal(itemCarrinho.getQuantidade())
+                    )
+            );
 
         }
 
