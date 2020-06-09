@@ -15,7 +15,7 @@ import ComMenu from "./components/ComMenu";
 export default {
   components: {
     "com-side-bar": ComSideBar,
-    "com-menu": ComMenu,
-  },
+    "com-menu": ComMenu
+  }
 };
 </script>

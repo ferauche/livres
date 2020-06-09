@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-md-8 offset-md-2" v-show="step === 1">
       <div class="card">
-        <div class="card-header">
-          Carrinho
-        </div>
+        <div class="card-header">Carrinho</div>
         <div class="card-body">
           <div class="table-responsive">
             <table
@@ -13,7 +11,7 @@
               cellspacing="0"
               width="100%"
             >
-              <thead class="">
+              <thead class>
                 <tr>
                   <th class="th-sm">Nome</th>
                   <th class="th-sm text-right">Quantidade</th>
@@ -34,7 +32,8 @@
           </div>
           <div class="text-right">
             <button type="button" class="btn btn-primary" @click="next()">
-              Continuar <i class="fa fa-share"></i>
+              Continuar
+              <i class="fa fa-share"></i>
             </button>
           </div>
         </div>
@@ -42,9 +41,7 @@
     </div>
     <div class="col-md-8 offset-md-2" v-show="step === 2">
       <div class="card">
-        <div class="card-header">
-          Dados de Entrega
-        </div>
+        <div class="card-header">Dados de Entrega</div>
         <div class="card-body">
           <form>
             <div class="md-form">
@@ -148,10 +145,12 @@
             </div>
             <div class="text-right">
               <button type="button" class="btn btn-primary" @click="prev()">
-                Voltar <i class="fa fa-reply"></i>
+                Voltar
+                <i class="fa fa-reply"></i>
               </button>
               <button type="button" class="btn btn-primary" @click="next()">
-                Continuar <i class="fa fa-share"></i>
+                Continuar
+                <i class="fa fa-share"></i>
               </button>
             </div>
           </form>
@@ -160,26 +159,18 @@
     </div>
     <div class="col-md-8 offset-md-2" v-show="step === 3">
       <div class="card">
-        <div class="card-header">
-          Método de Pagamento
-        </div>
+        <div class="card-header">Método de Pagamento</div>
         <div class="card-body">
           <form>
             <div class="pt-3"></div>
             <div class="select">
-              <select
-                class="select-text"
-                required
-                v-model="metodoPagamento"
-              >
+              <select class="select-text" required v-model="metodoPagamento">
                 <option disabled selected></option>
                 <option
                   v-for="option in metodosPagamento"
                   v-bind:value="option.nome"
                   :key="option.nome"
-                >
-                  {{ option.nome }}
-                </option>
+                >{{ option.nome }}</option>
               </select>
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
@@ -194,9 +185,7 @@
                   v-for="option in getMeiosPagamento()"
                   v-bind:value="option"
                   :key="option"
-                >
-                  {{ option }} </option
-                >>
+                >{{ option }}</option>>
               </select>
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
@@ -205,10 +194,17 @@
             <div class="pt-3"></div>
             <div class="text-right">
               <button type="button" class="btn btn-primary" @click="prev()">
-                Voltar <i class="fa fa-reply"></i>
+                Voltar
+                <i class="fa fa-reply"></i>
               </button>
-              <button type="button" class="btn btn-primary" @click="next()" :disabled="!meioPagamento">
-                Continuar <i class="fa fa-share"></i>
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="next()"
+                :disabled="!meioPagamento"
+              >
+                Continuar
+                <i class="fa fa-share"></i>
               </button>
             </div>
           </form>
@@ -217,78 +213,76 @@
     </div>
     <div class="col-md-8 offset-md-2" v-show="step === 4">
       <div class="card">
-        <div class="card-header">
-          Resumo do Pedido
-        </div>
+        <div class="card-header">Resumo do Pedido</div>
         <div class="card-body">
           <div class="card">
-            <div class="card-header">
-              Dados de Entrega
-            </div>
+            <div class="card-header">Dados de Entrega</div>
             <div class="card-body">
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Nome:</span> {{ nome }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Nome:</span>
+                  {{ nome }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">CEP:</span> {{ cep }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">CEP:</span>
+                  {{ cep }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">UF:</span> {{ estado }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">UF:</span>
+                  {{ estado }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Cidade:</span>
-                  {{ cidade }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Cidade:</span>
+                  {{ cidade }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Bairro:</span>
-                  {{ bairro }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Bairro:</span>
+                  {{ bairro }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Endereço:</span>
-                  {{ endereco }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Endereço:</span>
+                  {{ endereco }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Nº:</span> {{ numero }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Nº:</span>
+                  {{ numero }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Complemento:</span>
-                  {{ complemento }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Complemento:</span>
+                  {{ complemento }}
+                </label>
               </div>
             </div>
           </div>
           <div class="pt-3"></div>
           <div class="card">
-            <div class="card-header">
-              Forma de Pagamento
-            </div>
+            <div class="card-header">Forma de Pagamento</div>
             <div class="card-body">
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Modalidade:</span>
-                  {{ metodoPagamento }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Modalidade:</span>
+                  {{ metodoPagamento }}
+                </label>
               </div>
               <div class="row">
-                <label class="col"
-                  ><span class="font-weight-bold">Método:</span>
-                  {{ meioPagamento }}</label
-                >
+                <label class="col">
+                  <span class="font-weight-bold">Método:</span>
+                  {{ meioPagamento }}
+                </label>
               </div>
             </div>
           </div>
@@ -303,7 +297,7 @@
                   cellspacing="0"
                   width="100%"
                 >
-                  <thead class="">
+                  <thead class>
                     <tr>
                       <th class="th-sm">Nome</th>
                       <th class="th-sm">Quantidade</th>
@@ -326,11 +320,7 @@
           </div>
           <div class="pt-2"></div>
           <div class="text-right">
-            <button
-              type="button"
-              class="btn btn-success"
-              @click="finalizarPedido()"
-            >
+            <button type="button" class="btn btn-success" @click="finalizarPedido()">
               <i class="fa fa-shopping-cart"></i> Finalizar Pedido
             </button>
           </div>
@@ -342,7 +332,7 @@
 
 <script>
 import loja from "@/services/loja.js";
-import viacep from "@/services/viacep.js"
+import viacep from "@/services/viacep.js";
 
 export default {
   data() {
@@ -361,59 +351,65 @@ export default {
       metodoPagamento: "",
       meioPagamento: "",
       produtos: [],
-      metodosPagamento: [],
+      metodosPagamento: []
     };
   },
-      created() {
-        const that = this;
-        loja.checkout(191)
-          .then(response => {
-            that.produtos = response.data.produtos;
-            that.produtos
-            .map(p => p.preco = "R$ "+ p.preco
-              .toLocaleString("pt-BR", { 
-                maximumFractionDigits: 2, 
-                minimumFractionDigits: 2 
-              }));
+  created() {
+    const that = this;
+    loja.checkout(191).then(response => {
+      that.produtos = response.data.produtos;
+      that.produtos.map(
+        p =>
+          (p.preco =
+            "R$ " +
+            p.preco.toLocaleString("pt-BR", {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2
+            }))
+      );
 
-            that.valorTotal = "R$ "+response.data.valorTotal
-                .toLocaleString("pt-BR", { 
-                  maximumFractionDigits: 2, 
-                   minimumFractionDigits: 2 
-                });
+      that.valorTotal =
+        "R$ " +
+        response.data.valorTotal.toLocaleString("pt-BR", {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        });
 
-            that.metodosPagamento = response.data.metodosPagamento;
-          })
+      that.metodosPagamento = response.data.metodosPagamento;
+    });
+  },
+  methods: {
+    buscaPorCep() {
+      const that = this;
+
+      viacep
+        .buscaPorCep(this.cep)
+        .then(response => {
+          const data = response.data;
+          that.estado = data.uf;
+          that.cidade = data.localidade;
+          that.bairro = data.bairro;
+          that.endereco = data.logradouro;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    methods: {
-        buscaPorCep(){
-          const that = this;
-
-          viacep.buscaPorCep(this.cep)
-            .then(response => {
-                const data = response.data;
-                that.estado = data.uf;
-                that.cidade = data.localidade;
-                that.bairro = data.bairro;
-                that.endereco = data.logradouro;
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        },
-        prev() {
-            this.step--;
-        },
-        next() {
-            this.step++;
-        },
-        getMeiosPagamento(){
-          const metodo = this.metodosPagamento.find(m => m.nome === this.metodoPagamento);
-          return (metodo) ? metodo.meiosPagamento : [];
-        },
-        finalizarPedido() {
-          this.$toaster.error("Função não implementada");
-        }
+    prev() {
+      this.step--;
     },
+    next() {
+      this.step++;
+    },
+    getMeiosPagamento() {
+      const metodo = this.metodosPagamento.find(
+        m => m.nome === this.metodoPagamento
+      );
+      return metodo ? metodo.meiosPagamento : [];
+    },
+    finalizarPedido() {
+      this.$toaster.error("Função não implementada");
+    }
+  }
 };
 </script>

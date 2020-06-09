@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-md-8 col-sm-12 offset-md-2">
       <div class="card">
-        <div class="card-header">
-          Lista de Produtos
-        </div>
+        <div class="card-header">Lista de Produtos</div>
         <div class="card-body">
           <div class="table-responsive">
             <table
@@ -24,7 +22,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="produto in produtos" :key="produto.id">
+                <tr v-for="produto in displayedProdutos" :key="produto.id">
                   <td>{{ produto.nome }}</td>
                   <td>{{ produto.categoria }}</td>
                   <td class="text-right">{{ produto.qtdEstoque }}</td>
@@ -48,15 +46,42 @@
           </div>
           <div class="row">
             <div class="col">
-             <!-- :click-handler="buscarProdutosPorPagina()" -->
+              <nav style="float: right">
+                <ul class="pagination2">
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      v-if="page != 1"
+                      @click="page--"
+                    ><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      v-bind:key="pageNumber"
+                      v-for="pageNumber in pages.slice(page-1, page+5)"
+                      :class="{ active: pageNumber == page }"
+                      @click="page = pageNumber"
+                    >{{pageNumber}}</button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      @click="page++"
+                      v-if="page < pages.length"
+                      class="page-link"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                  </li>
+                </ul>
+              </nav>
+              <!-- :click-handler="buscarProdutosPorPagina()" -->
             </div>
           </div>
           <div class="row">
             <div class="col text-right">
-              <button
-                class="btn btn-primary"
-                @click="$router.push('/checkout')"
-              >
+              <button class="btn btn-primary" @click="$router.push('/carinho')">
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i> Ir até
                 o Carrinho
               </button>
@@ -76,68 +101,108 @@ export default {
       produtor: "",
       produtos: [],
       produtores: [],
-      currentPage: 0,
-      pageCount: 0
+      page: 1,
+      perPage: 5,
+      pages: []
     };
   },
   created() {
-      const that = this;
-      loja.listarCarrinhos(191)
-        .then(response => {
-          const carrinho = response.data.produtos;
-          loja.getProdutosDisponiveisVendaByCategoria(191)
-            .then(response => {
-              that.produtos = response.data.produtos;
-              that.produtos
-                .map(p => p.preco = "R$ "+ p.preco
-                   .toLocaleString("pt-BR", { 
-                      maximumFractionDigits: 2, 
-                      minimumFractionDigits: 2 
-                   })
-                );
+    const that = this;
+    loja.listarCarrinhos(191).then(response => {
+      const carrinho = response.data.produtos;
+      loja.getProdutosDisponiveisVendaByCategoria(191).then(response => {
+        that.produtos = response.data.produtos;
+        that.produtos.map(
+          p =>
+            (p.preco =
+              "R$ " +
+              p.preco.toLocaleString("pt-BR", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+              }))
+        );
 
-              that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
-            });
-
-        });
+        that.produtos.map(
+          p =>
+            (p.qtd = carrinho.find(
+              c => c.estoqueProdutorId === p.estoqueId
+            ).quantidade)
+        );
+      });
+    });
   },
-   methods: {
-        buscarProdutosPorPagina(){
-          const that = this;
-          loja.listarCarrinhos(191)
-            .then(response => {
-              const carrinho = response.data.produtos;
-              loja.getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
-                .then(response => {
-                  that.produtos = response.data.produtos;
-                  that.produtos
-                    .map(p => p.preco = "R$ "+ p.preco
-                       .toLocaleString("pt-BR", { 
-                          maximumFractionDigits: 2, 
-                          minimumFractionDigits: 2 
-                       })
-                    );
+  computed: {
+    displayedProdutos() {
+      return this.paginate(this.produtos);
+    }
+  },
+  watch: {
+    produtos() {
+      this.setPages();
+    }
+  },
+  filters: {
+    trimWords(value) {
+      return (
+        value
+          .split(" ")
+          .splice(0, 20)
+          .join(" ") + "..."
+      );
+    }
+  },
+  methods: {
+    buscarProdutosPorPagina() {
+      const that = this;
+      loja.listarCarrinhos(191).then(response => {
+        const carrinho = response.data.produtos;
+        loja
+          .getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
+          .then(response => {
+            that.produtos = response.data.produtos;
+            that.produtos.map(
+              p =>
+                (p.preco =
+                  "R$ " +
+                  p.preco.toLocaleString("pt-BR", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2
+                  }))
+            );
 
-                  that.produtos.map(p => p.qtd = carrinho.find(c=>c.estoqueProdutorId === p.estoqueId).quantidade);
-                });
-
-            });
-        },
-        validarQtdProdEscolhido(produto) {
-            produto.qtd = Math.abs(produto.qtd);
-
-            if (produto.qtd > produto.qtdEstoque)
-                produto.qtd = produto.qtdEstoque;
-        },
-        updateCarrinho(produto) {
-          const that = this;
-          loja.sincronizarProduto(191, produto.estoqueId, produto.qtd)
-            .then(()=>{
-                that.$toaster.success("Carrinho atualizado!");
-            });
-        }
+            that.produtos.map(
+              p =>
+                (p.qtd = carrinho.find(
+                  c => c.estoqueProdutorId === p.estoqueId
+                ).quantidade)
+            );
+          });
+      });
     },
+    validarQtdProdEscolhido(produto) {
+      produto.qtd = Math.abs(produto.qtd);
+
+      if (produto.qtd > produto.qtdEstoque) produto.qtd = produto.qtdEstoque;
+    },
+    updateCarrinho(produto) {
+      const that = this;
+      loja.sincronizarProduto(191, produto.estoqueId, produto.qtd).then(() => {
+        that.$toaster.success("Carrinho atualizado!");
+      });
+    },
+    setPages() {
+      let numberOfPages = Math.ceil(this.produtos.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate(produtos) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return produtos.slice(from, to);
+    }
+  }
 };
 </script>
-
-<style></style>
