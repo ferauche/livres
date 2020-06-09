@@ -6,6 +6,7 @@ import br.com.livresbs.livres.model.PreComunidade;
 import br.com.livresbs.livres.repository.ConsumidorRepository;
 import br.com.livresbs.livres.repository.PreComunidadeRepository;
 import br.com.livresbs.livres.service.ConsumidorService;
+import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,19 +52,22 @@ public class ConsumidorImpl implements ConsumidorService {
         return cons.findById(id).get();
     }
 
-    public ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con) {
+    public ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con)  {
         if(!cons.existsById(con.getCpf())) {
             Optional<PreComunidade> oppre = pre.findById(con.getPrecomunidade());
             if(!oppre.isPresent()){
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
+            String senha = con.getSenha();
+
+            String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
 
             Consumidor consumidor = Consumidor.builder()
                     .cpf(con.getCpf())
                     .nome(con.getNome())
                     .sobrenome(con.getSobrenome())
-                    .senha(con.getSenha())
+                    .senha(sha256hex)
                     .precomunidade(oppre.get())
                     .build();
 
@@ -82,13 +89,15 @@ public class ConsumidorImpl implements ConsumidorService {
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
-            String senhaCript = consumidor.getSenha();
+            String senha = consumidor.getSenha();
+
+            String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
 
             Consumidor con = Consumidor.builder()
                     .cpf(consumidor.getCpf())
                     .nome(consumidor.getNome())
                     .sobrenome(consumidor.getSobrenome())
-                    .senha(senhaCript)
+                    .senha(sha256hex)
                     .precomunidade(oppre.get())
                     .build();
 
