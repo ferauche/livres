@@ -37,8 +37,17 @@
               />
               <label for="cpf">CPF</label>
             </div>
+            <div v-else>
+              Alterar senha?
+              <input
+                type="checkbox"
+                class="mb-4"
+                id="alterarSenha"
+                @click="alterarSenha = !alterarSenha"
+              />
+            </div>
 
-            <div class="md-form">
+            <div v-show="!preenchido || alterarSenha" class="md-form">
               <input
                 autocomplete="off"
                 type="password"
@@ -95,6 +104,7 @@ export default {
   data() {
     return {
       preenchido: false,
+      alterarSenha: false,
       consumidor: {
         nome: "",
         sobrenome: "",
@@ -114,14 +124,18 @@ export default {
       }
     },
     AdicionarConsumidor: function() {
-      Consumidores.inserir(this.consumidor)
-        .then(() => {
-          this.$toaster.success("Consumidor adicionado com sucesso");
-          this.$router.push("/consumidores");
-        })
-        .catch(() => {
-          this.$toaster.error("Não foi possível adicionar consumidor");
-        });
+      if (this.consumidor.senha == "") {
+        this.$toaster.error("Necessário cadastrar uma senha");
+      } else {
+        Consumidores.inserir(this.consumidor)
+          .then(() => {
+            this.$toaster.success("Consumidor adicionado com sucesso");
+            this.$router.push("/consumidores");
+          })
+          .catch(() => {
+            this.$toaster.error("Não foi possível adicionar consumidor");
+          });
+      }
     },
     AlterarConsumidor: function() {
       Consumidores.alterar(this.consumidor)
@@ -148,6 +162,7 @@ export default {
     if (this.consumidorAlterar != null) {
       this.preenchido = true;
       this.consumidor = this.consumidorAlterar;
+      this.consumidor.senha = "";
     }
   }
 };

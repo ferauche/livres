@@ -80,7 +80,8 @@ export default {
     BuscarPreComunidade: function(_idConsumidor, _idPreComunidade) {
       PreComunidades.buscarPorId(_idPreComunidade)
         .then(result => {
-          this.consumidores[_idConsumidor].precomunidade = result.data.nome;
+          // this.consumidores[_idConsumidor].precomunidade = result.data.nome;
+          console.log(result.data.nome);
         })
         .catch(() => {
           this.$toaster.error("Erro ao buscar pré-comunidades");
