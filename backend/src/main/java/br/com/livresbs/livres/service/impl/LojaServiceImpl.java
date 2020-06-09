@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class LojaServiceImpl implements LojaService {
                     .nome(estoqueProdutor.getProduto().getNome())
                     .preco(estoqueProdutor.getPreco().doubleValue())
                     .categoria(estoqueProdutor.getProduto().getCategoria().getNome())
+                    .quantidade(BigDecimal.valueOf(estoqueProdutor.getQuantidade()).setScale(2, RoundingMode.HALF_UP))
+                    .unidadeMedida(estoqueProdutor.getUnidadeMedida().getNome())
                     .build();
 
             produtos.add(produtoDisponivel);
