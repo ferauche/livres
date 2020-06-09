@@ -13,7 +13,7 @@
                 class="form-control"
                 v-model.trim="precomunidade.nome"
               />
-              <label for="nome">{{ precomunidadeAlterar.nome }}</label>
+              <label :class="{active: preenchido}" for="nome">Nome</label>
             </div>
             <div class="text-right">
               <router-link to="/precomunidades" type="button" class="btn">Cancelar</router-link>
@@ -39,6 +39,7 @@ export default {
   },
   data() {
     return {
+      preenchido: false,
       precomunidade: { id: 0, nome: "" }
     };
   },
@@ -73,9 +74,8 @@ export default {
   },
   created() {
     if (this.precomunidadeAlterar != null) {
-      this.precomunidade.id = this.precomunidadeAlterar.id;
-    } else {
-      this.precomunidadeAlterar = { nome: "Nome" };
+      this.preenchido = true;
+      this.precomunidade = this.precomunidadeAlterar;
     }
   }
 };
