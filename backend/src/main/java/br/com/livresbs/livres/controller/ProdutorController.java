@@ -18,38 +18,38 @@ import br.com.livresbs.livres.model.Produtor;
 import br.com.livresbs.livres.service.ProdutorService;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="produtor")
 public class ProdutorController {
 
 	@Autowired
-	ProdutorService ps;
+	private ProdutorService ps;
 	
 	@CrossOrigin
-	@GetMapping("/listarProdutores")
+	@GetMapping
 	public List<Produtor> listarTodosProdutos(){
 		return ps.listarProdutores();
 	}
 	
 	@CrossOrigin
-	@GetMapping("/listarUnicoProdutor/{id}")
+	@GetMapping("/{id}")
 	public Produtor listarUnicoProdutor(@PathVariable(value = "id") String id) {
 		return ps.listarUnicoProdutor(id);
 	}
 	
 	@CrossOrigin
-	@PostMapping("/cadastrarProdutor")
+	@PostMapping
 	public ResponseEntity<String> cadastarProdutor(@RequestBody Produtor produtor){
 		return ps.cadastraProdutor(produtor);
 	}
 	
 	@CrossOrigin
-	@PutMapping("/atualizarProdutor")
+	@PutMapping
 	public ResponseEntity<String> atualizarProdutores(@RequestBody Produtor produtor){
 		return ps.atualizaProduto(produtor);
 	}
 	
 	@CrossOrigin
-	@DeleteMapping("/deletarProdutor/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletaProdutor(@PathVariable(value="id") String id){
 		return ps.deletarProduto(id);
 	}
