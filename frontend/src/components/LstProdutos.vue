@@ -84,7 +84,7 @@
           </div>
           <div class="row">
             <div class="col text-right">
-              <button class="btn btn-primary" @click="$router.push('/carrinho')">
+              <button class="btn btn-primary" @click="$router.push('/carinho')">
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i> Ir até
                 o Carrinho
               </button>
@@ -163,7 +163,7 @@ export default {
       let min = page - 1;
       let max = page + 4;
 
-      if (this.maxPages <= 5) {
+      if (this.maxPages <= 5) { 
         min = 0;
         max = this.maxPages;
       } else {
@@ -171,7 +171,7 @@ export default {
           if (min - 2 > 0) {
             min -= 2;
             max -= 2;
-          } else {
+          }else {
             min = 0;
             max = Math.min(this.maxPages, 5);
           }

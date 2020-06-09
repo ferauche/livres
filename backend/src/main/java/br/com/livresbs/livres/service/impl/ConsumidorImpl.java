@@ -8,13 +8,16 @@ import br.com.livresbs.livres.repository.PreComunidadeRepository;
 import br.com.livresbs.livres.service.ConsumidorService;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.security.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,6 @@ public class ConsumidorImpl implements ConsumidorService {
             ConsumidorDTO builderDto = ConsumidorDTO.builder()
                     .nome(consumidor.getNome())
                     .cpf(consumidor.getCpf())
-                    .senha(consumidor.getSenha())
                     .sobrenome(consumidor.getSobrenome())
                     .precomunidade(consumidor.getPrecomunidade().getId())
                     .build();
@@ -83,36 +85,23 @@ public class ConsumidorImpl implements ConsumidorService {
     public ResponseEntity<String> editaConsumidor(ConsumidorDTO consumidor) {
         if(cons.existsById(consumidor.getCpf())) {
             Optional<PreComunidade> oppre = pre.findById(consumidor.getPrecomunidade());
-            if (!oppre.isPresent()) {
+            if(!oppre.isPresent()){
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
             String senha = consumidor.getSenha();
-            if(senha == "" || senha == null) {
 
-                Consumidor con = Consumidor.builder()
-                        .cpf(consumidor.getCpf())
-                        .nome(consumidor.getNome())
-                        .senha(cons.findById(consumidor.getCpf()).get().getSenha())
-                        .sobrenome(consumidor.getSobrenome())
-                        .precomunidade(oppre.get())
-                        .build();
+            String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
 
-                cons.save(con);
-            }
-            else{
+            Consumidor con = Consumidor.builder()
+                    .cpf(consumidor.getCpf())
+                    .nome(consumidor.getNome())
+                    .sobrenome(consumidor.getSobrenome())
+                    .senha(sha256hex)
+                    .precomunidade(oppre.get())
+                    .build();
 
-                String sha256hex = Hashing.sha256().hashString(senha, StandardCharsets.UTF_8).toString();
-                Consumidor con = Consumidor.builder()
-                        .cpf(consumidor.getCpf())
-                        .nome(consumidor.getNome())
-                        .sobrenome(consumidor.getSobrenome())
-                        .senha(sha256hex)
-                        .precomunidade(oppre.get())
-                        .build();
-
-                cons.save(con);
-            }
+            cons.save(con);
 
             return ResponseEntity.status(HttpStatus.OK).body("Editado com Sucesso!");
         }
@@ -121,7 +110,7 @@ public class ConsumidorImpl implements ConsumidorService {
         }
     }
 
-    @Override
+	@Override
 	public /*ResponseEntity*/ void deletarConsumidor(String id) {
 		//if(cons.existsById(id)) {
 			//Consumidor con = cons.findById(id).get();

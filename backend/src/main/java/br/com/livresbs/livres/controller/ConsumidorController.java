@@ -27,7 +27,6 @@ public class ConsumidorController {
         return cons.listaConsumidorUnico(id);
     }
 
-
     @CrossOrigin
     @PutMapping
     public ResponseEntity<String> editaConsumidor(@RequestBody ConsumidorDTO consumidor){

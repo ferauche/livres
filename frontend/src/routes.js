@@ -7,41 +7,11 @@ import Produtos from "./components/LstProdutos";
 import Checkout from "./components/Checkout";
 
 export default [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/consumidores",
-    name: "ListaConsumidores",
-    component: ListaConsumidores,
-  },
-  {
-    path: "/consumidores/cadastro",
-    name: "CadConsumidores",
-    props: true,
-    component: CadConsumidores,
-  },
-  {
-    path: "/precomunidades",
-    name: "ListaPreComunidades",
-    component: ListaPreComunidades,
-  },
-  {
-    path: "/precomunidades/cadastro",
-    name: "CadPreComunidade",
-    props: true,
-    component: CadPreComunidade,
-  },
-  {
-    path: "/produtos",
-    name: "Produtos",
-    component: Produtos,
-  },
-  {
-    path: "/carrinho",
-    name: "Checkout",
-    component: Checkout,
-  },
+  { path: "/", component: Home },
+  { path: "/consumidores", component: ListaConsumidores },
+  { path: "/consumidores/cadastro", component: CadConsumidores },
+  { path: "/precomunidades", component: ListaPreComunidades },
+  { path: "/precomunidades/cadastro", component: CadPreComunidade },
+  { path: "/produtos", component: Produtos },
+  { path: "/carrinho", component: Checkout },
 ];
