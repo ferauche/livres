@@ -27,6 +27,7 @@
               type="button"
               data-toggle="modal"
               data-target="#deletarModal"
+              @click="IdentificarCpf(consumidor.cpf)"
             >
               <i class="fas fa-trash-alt"></i>
             </a>
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-// import Consumidores from "../services/consumidores";
+import Consumidores from "../services/consumidores";
 import modalDelete from "./modalDelete";
 
 export default {
@@ -55,28 +56,37 @@ export default {
   },
   data() {
     return {
-      consumidores: [
-        { nome: "teste", sobrenome: "teste", cpf: "teste", precomunidade: 1 },
-        { nome: "teste", sobrenome: "teste", cpf: "teste", precomunidade: 1 },
-        { nome: "teste", sobrenome: "teste", cpf: "teste", precomunidade: 1 },
-        { nome: "teste", sobrenome: "teste", cpf: "teste", precomunidade: 1 }
-      ]
+      consumidores: [],
+      cpfParaExclusao: ""
     };
   },
   methods: {
+    ListarConsumidores: function() {
+      Consumidores.listar()
+        .then(result => {
+          this.consumidores = result.data;
+        })
+        .catch(() => {
+          this.$toaster.error("Erro ao carregar lista de consumidores");
+        });
+    },
     ExcluirConsumidor: function() {
-      this.$toaster.error("Consumidor Removido com sucesso");
+      Consumidores.delete(this.cpfParaExclusao)
+        .then(() => {
+          this.$toaster.error("Consumidor removido com sucesso");
+          this.ListarConsumidores();
+        })
+        .catch(() => {
+          this.$toaster.error("Não foi possível remover o consumidor");
+        });
+    },
+    IdentificarCpf: function(_cpf) {
+      this.cpfParaExclusao = _cpf;
     }
   },
   created() {},
   mounted() {
-    // Consumidores.listar()
-    //   .then(result => {
-    //     this.consumidores = result.data;
-    //   })
-    //   .catch(() => {
-    //     this.$toaster.error("Erro ao carregar lista");
-    //   });
+    this.ListarConsumidores();
   }
 };
 </script>
