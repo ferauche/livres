@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="row">
     <div class="col-md-8 col-sm-12 offset-md-2">
       <div class="card">
@@ -25,7 +25,7 @@
                 <tr v-for="produto in produtos" :key="produto.id">
                   <td>{{ produto.nome }}</td>
                   <td>{{ produto.categoria }}</td>
-                  <td class="text-right">{{ produto.qtdEstoque }}</td>
+                  <td class="text-right">{{ produto.quantidade }}</td>
                   <td class="text-right">{{ produto.preco }}</td>
                   <td style="cursor: pointer;" class="text-center">
                     <input
@@ -33,7 +33,7 @@
                       autocomplete="off"
                       type="number"
                       min="0"
-                      v-bind:max="produto.qtdEstoque"
+                      v-bind:max="produto.quantidade"
                       value="0"
                       v-model="produto.qtd"
                       @change="updateCarrinho(produto)"
@@ -131,12 +131,20 @@ export default {
                     minimumFractionDigits: 2
                   }))
             );
+
             if (carrinho.length) {
               that.produtos.map(
-                p =>
-                  (p.qtd = carrinho.find(
+                p => {
+                  const prodCarrinho = carrinho.find(
                     c => c.estoqueProdutorId === p.estoqueId
-                  ).quantidade)
+                  );
+
+                  if(prodCarrinho)
+                    p.qtd = prodCarrinho.quantidade
+                  else
+                    p.qtd = 0;
+                }
+                  
               );
             }
 
