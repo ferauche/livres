@@ -7,11 +7,13 @@ import br.com.livresbs.livres.repository.ConsumidorRepository;
 import br.com.livresbs.livres.repository.PreComunidadeRepository;
 import br.com.livresbs.livres.service.ConsumidorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ConsumidorImpl implements ConsumidorService {
 
     @Autowired
     PreComunidadeRepository pre;
-    
+
 
     public List<ConsumidorDTO> listarConsumidor() {
         List<ConsumidorDTO> listConsdto = new ArrayList<>();
@@ -53,11 +55,13 @@ public class ConsumidorImpl implements ConsumidorService {
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
+            String senhaCript = con.getSenha();
+
             Consumidor consumidor = Consumidor.builder()
                     .cpf(con.getCpf())
                     .nome(con.getNome())
                     .sobrenome(con.getSobrenome())
-                    .senha(con.getSenha())
+                    .senha(senhaCript)
                     .precomunidade(oppre.get())
                     .build();
 
@@ -79,11 +83,13 @@ public class ConsumidorImpl implements ConsumidorService {
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
+            String senhaCript = consumidor.getSenha();
+
             Consumidor con = Consumidor.builder()
                     .cpf(consumidor.getCpf())
                     .nome(consumidor.getNome())
                     .sobrenome(consumidor.getSobrenome())
-                    .senha(consumidor.getSenha())
+                    .senha(senhaCript)
                     .precomunidade(oppre.get())
                     .build();
 
