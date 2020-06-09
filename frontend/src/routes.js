@@ -13,5 +13,5 @@ export default [
   { path: "/precomunidades", component: ListaPreComunidades },
   { path: "/precomunidades/cadastro", component: CadPreComunidade },
   { path: "/produtos", component: Produtos },
-  { path: "/carinho", component: Checkout },
+  { path: "/carrinho", component: Checkout },
 ];
