@@ -19,7 +19,10 @@
           <td>{{ consumidor.cpf }}</td>
           <td>{{ consumidor.precomunidade }}</td>
           <td class="row justify-content-end">
-            <router-link class="btn btn-outline-primary mr-3" to="consumidores/cadastro">
+            <router-link
+              class="btn btn-outline-primary mr-3"
+              :to="{name: 'CadConsumidores', params:{consumidorAlterar: consumidor}}"
+            >
               <i class="fas fa-pencil-alt"></i>
             </router-link>
             <a

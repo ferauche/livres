@@ -34,7 +34,7 @@ import PreComunidade from "../services/precomunidade";
 export default {
   props: {
     precomunidadeAlterar: {
-      type: Array
+      type: Object
     }
   },
   data() {
@@ -71,7 +71,7 @@ export default {
         });
     }
   },
-  mounted() {
+  created() {
     if (this.precomunidadeAlterar != null) {
       this.precomunidade.id = this.precomunidadeAlterar.id;
     } else {

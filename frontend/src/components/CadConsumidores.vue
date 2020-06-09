@@ -13,7 +13,7 @@
                 class="form-control"
                 v-model.trim="consumidor.nome"
               />
-              <label for="nome">Nome</label>
+              <label :class="{active: preenchido}" for="nome">Nome</label>
             </div>
 
             <div class="md-form">
@@ -24,10 +24,10 @@
                 class="form-control"
                 v-model.trim="consumidor.sobrenome"
               />
-              <label for="sobrenome">Sobrenome</label>
+              <label :class="{active: preenchido}" for="sobrenome">Sobrenome</label>
             </div>
 
-            <div class="md-form">
+            <div v-if="!preenchido" class="md-form">
               <input
                 autocomplete="off"
                 type="text"
@@ -69,6 +69,7 @@
 
             <div class="row">
               <div class="col text-right">
+                <router-link to="/consumidores" type="button" class="btn">Cancelar</router-link>
                 <button type="button" class="btn btn-primary pull-right" @click="cadastrar()">
                   <i class="fa fa-floppy-o"></i> Cadastrar
                 </button>
@@ -86,8 +87,14 @@ import Consumidores from "../services/consumidores";
 import PreComunidades from "../services/precomunidade";
 
 export default {
+  props: {
+    consumidorAlterar: {
+      type: Object
+    }
+  },
   data() {
     return {
+      preenchido: false,
       consumidor: {
         nome: "",
         sobrenome: "",
@@ -100,12 +107,13 @@ export default {
   },
   methods: {
     cadastrar: function() {
-      // if cpf existe
-      // alterar
-      // else
-      this.SalvarConsumidor();
+      if (this.preenchido) {
+        this.AlterarConsumidor();
+      } else {
+        this.AdicionarConsumidor();
+      }
     },
-    SalvarConsumidor: function() {
+    AdicionarConsumidor: function() {
       Consumidores.inserir(this.consumidor)
         .then(() => {
           this.$toaster.success("Consumidor adicionado com sucesso");
@@ -114,16 +122,33 @@ export default {
         .catch(() => {
           this.$toaster.error("Não foi possível adicionar consumidor");
         });
+    },
+    AlterarConsumidor: function() {
+      Consumidores.alterar(this.consumidor)
+        .then(() => {
+          this.$toaster.success("Consumidor alterado com sucesso");
+          this.$router.push("/consumidores");
+        })
+        .catch(() => {
+          this.$toaster.error("Não foi possível alterar consumidor");
+        });
+    },
+    ListarPreComunidades: function() {
+      PreComunidades.listar()
+        .then(result => {
+          this.precomunidades = result.data;
+        })
+        .catch(() => {
+          this.$toaster.error("Erro ao carregar lista pré-comunidades");
+        });
     }
   },
-  mounted() {
-    PreComunidades.listar()
-      .then(result => {
-        this.precomunidades = result.data;
-      })
-      .catch(() => {
-        this.$toaster.error("Erro ao carregar lista pré-comunidades");
-      });
+  created() {
+    this.ListarPreComunidades();
+    if (this.consumidorAlterar != null) {
+      this.preenchido = true;
+      this.consumidor = this.consumidorAlterar;
+    }
   }
 };
 </script>
