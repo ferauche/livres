@@ -7,13 +7,14 @@ import br.com.livresbs.livres.repository.ConsumidorRepository;
 import br.com.livresbs.livres.repository.PreComunidadeRepository;
 import br.com.livresbs.livres.service.ConsumidorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.persistence.Id;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class ConsumidorImpl implements ConsumidorService {
 
     @Autowired
     PreComunidadeRepository pre;
-    
+
 
     public List<ConsumidorDTO> listarConsumidor() {
         List<ConsumidorDTO> listConsdto = new ArrayList<>();
@@ -51,14 +52,16 @@ public class ConsumidorImpl implements ConsumidorService {
         if(!cons.existsById(con.getCpf())) {
             Optional<PreComunidade> oppre = pre.findById(con.getPrecomunidade());
             if(!oppre.isPresent()){
-                //TODO tratamente caso precomunidade nao exista
+                return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
+
+            String senhaCript = con.getSenha();
 
             Consumidor consumidor = Consumidor.builder()
                     .cpf(con.getCpf())
                     .nome(con.getNome())
                     .sobrenome(con.getSobrenome())
-                    .senha(con.getSenha())
+                    .senha(senhaCript)
                     .precomunidade(oppre.get())
                     .build();
 
@@ -68,6 +71,34 @@ public class ConsumidorImpl implements ConsumidorService {
         }
         else{
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já Cadastrado!");
+        }
+    }
+
+
+    @Override
+    public ResponseEntity<String> editaConsumidor(ConsumidorDTO consumidor) {
+        if(cons.existsById(consumidor.getCpf())) {
+            Optional<PreComunidade> oppre = pre.findById(consumidor.getPrecomunidade());
+            if(!oppre.isPresent()){
+                return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
+            }
+
+            String senhaCript = consumidor.getSenha();
+
+            Consumidor con = Consumidor.builder()
+                    .cpf(consumidor.getCpf())
+                    .nome(consumidor.getNome())
+                    .sobrenome(consumidor.getSobrenome())
+                    .senha(senhaCript)
+                    .precomunidade(oppre.get())
+                    .build();
+
+            cons.save(con);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Editado com Sucesso!");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF não Encontrado!");
         }
     }
 

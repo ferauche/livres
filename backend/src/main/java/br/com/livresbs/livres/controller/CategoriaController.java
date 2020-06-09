@@ -12,30 +12,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value = "categoria")
 public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
 
-    @GetMapping("/categoria")
+    @GetMapping
     public List<CategoriaProduto> getCategorias() {
-        /*
-        List<CategoriaProduto> categorias = categoriaService.findAll();
-
-        return CategoriasProdutosDTO.builder()
-                .categorias(categorias.stream().map(CategoriaProduto::getNome).collect(Collectors.toList()))
-                .build();*/
-
         return categoriaService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public CategoriaProduto getCategoriaId(@PathVariable(value = "id") Integer id) {
+        return categoriaService.listaCategoriaId(id);
+    }
 
-    @PostMapping("/categoria")
+    @PutMapping
+    public ResponseEntity<String> editaCategoria(@RequestBody CategoriaProduto categoria){
+        return categoriaService.editaCategoria(categoria);
+    }
+
+
+    @PostMapping
     public ResponseEntity<String> cadastraCategoria(@RequestBody CategoriaProduto categoria) {
         return categoriaService.cadastraCategoria(categoria);
     }
 
-    @DeleteMapping("/categoria/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletaConsumidor(@PathVariable(value = "id") Integer id) {
         return categoriaService.deletarCategoria(id);
     }

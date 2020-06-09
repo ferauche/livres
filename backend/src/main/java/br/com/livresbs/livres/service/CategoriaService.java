@@ -11,5 +11,9 @@ public interface CategoriaService {
     ResponseEntity<String> cadastraCategoria(@RequestBody CategoriaProduto cat);
 
     ResponseEntity<String> deletarCategoria(Integer id);
+
+    CategoriaProduto listaCategoriaId(Integer id);
+
+    ResponseEntity<String> editaCategoria(CategoriaProduto categoria);
 };
 

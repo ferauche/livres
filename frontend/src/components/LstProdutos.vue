@@ -46,36 +46,6 @@
           </div>
           <div class="row">
             <div class="col">
-              <nav style="float: right">
-                <ul class="pagination2">
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      class="page-link"
-                      v-if="page != 1"
-                      @click="page--"
-                    ><i class="fa fa-angle-left" aria-hidden="true"></i></button>
-                  </li>
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      class="page-link"
-                      v-bind:key="pageNumber"
-                      v-for="pageNumber in pages.slice(page-1, page+5)"
-                      :class="{ active: pageNumber == page }"
-                      @click="page = pageNumber"
-                    >{{pageNumber}}</button>
-                  </li>
-                  <li class="page-item">
-                    <button
-                      type="button"
-                      @click="page++"
-                      v-if="page < pages.length"
-                      class="page-link"
-                    ><i class="fa fa-angle-right" aria-hidden="true"></i></button>
-                  </li>
-                </ul>
-              </nav>
               <!-- :click-handler="buscarProdutosPorPagina()" -->
             </div>
           </div>
@@ -131,26 +101,6 @@ export default {
       });
     });
   },
-  computed: {
-    displayedProdutos() {
-      return this.paginate(this.produtos);
-    }
-  },
-  watch: {
-    produtos() {
-      this.setPages();
-    }
-  },
-  filters: {
-    trimWords(value) {
-      return (
-        value
-          .split(" ")
-          .splice(0, 20)
-          .join(" ") + "..."
-      );
-    }
-  },
   methods: {
     buscarProdutosPorPagina() {
       const that = this;
@@ -189,19 +139,6 @@ export default {
       loja.sincronizarProduto(191, produto.estoqueId, produto.qtd).then(() => {
         that.$toaster.success("Carrinho atualizado!");
       });
-    },
-    setPages() {
-      let numberOfPages = Math.ceil(this.produtos.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
-    paginate(produtos) {
-      let page = this.page;
-      let perPage = this.perPage;
-      let from = page * perPage - perPage;
-      let to = page * perPage;
-      return produtos.slice(from, to);
     }
   }
 };

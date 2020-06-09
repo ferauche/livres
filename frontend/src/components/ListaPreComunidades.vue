@@ -21,6 +21,7 @@
               type="button"
               data-toggle="modal"
               data-target="#deletarModal"
+              @click="IdentificarId(precomunidade.id)"
             >
               <i class="fas fa-trash-alt"></i>
             </a>
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+import PreComunidades from "../services/precomunidade";
 import modalDelete from "./modalDelete";
 
 export default {
@@ -48,15 +50,36 @@ export default {
   },
   data() {
     return {
-      precomunidades: []
+      precomunidades: [],
+      idParaExclusao: 0
     };
   },
   methods: {
+    ListarPreComunidades: function() {
+      PreComunidades.listar()
+        .then(result => {
+          this.precomunidades = result.data;
+        })
+        .catch(() => {
+          this.$toaster.error("Erro ao carregar lista de Pré-comunidades");
+        });
+    },
     ExcluirPrecomunidade: function() {
-      this.$toaster.error("Pré-comunidade Removida com sucesso");
+      PreComunidades.delete(this.idParaExclusao)
+        .then(() => {
+          this.$toaster.success("Pré-comunidade removida com sucesso");
+          this.ListarPreComunidades();
+        })
+        .catch(() => {
+          this.$toaster.error("Não foi possível remover a pré-comunidade");
+        });
+    },
+    IdentificarId: function(_id) {
+      this.idParaExclusao = _id;
     }
   },
-  created() {},
-  mounted() {}
+  mounted() {
+    this.ListarPreComunidades();
+  }
 };
 </script>
