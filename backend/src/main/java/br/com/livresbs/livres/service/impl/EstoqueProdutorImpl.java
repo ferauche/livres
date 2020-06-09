@@ -39,7 +39,7 @@ public class EstoqueProdutorImpl implements EstoqueProdutorService{
 			ep.setId(x.getId());
 			ep.setDatasEntrega(x.getDatasEntrega());
 			ep.setPreco(x.getPreco());
-			//ep.setProduto(x.getProduto());
+			ep.setProduto(x.getProduto());
 			ep.setProdutor(x.getProdutor());
 			ep.setQuantidade(x.getQuantidade());
 			ep.setUnidadeMedida(x.getUnidadeMedida());

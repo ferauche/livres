@@ -1,6 +1,7 @@
 package br.com.livresbs.livres.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -28,12 +29,13 @@ public class Consumidor {
     @NotBlank
     private String sobrenome;
     @NotBlank
+    @JsonIgnore
     private String senha;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "precomunidade")
     @NotNull
-    
+    @JsonBackReference
     private PreComunidade precomunidade;
 
     @ManyToMany
