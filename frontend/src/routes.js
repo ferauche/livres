@@ -11,7 +11,12 @@ export default [
   { path: "/consumidores", component: ListaConsumidores },
   { path: "/consumidores/cadastro", component: CadConsumidores },
   { path: "/precomunidades", component: ListaPreComunidades },
-  { path: "/precomunidades/cadastro", component: CadPreComunidade },
+  {
+    path: "/precomunidades/cadastro",
+    name: "CadPreComunidade",
+    props: true,
+    component: CadPreComunidade,
+  },
   { path: "/produtos", component: Produtos },
   { path: "/carinho", component: Checkout },
 ];

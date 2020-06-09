@@ -9,6 +9,10 @@ export default {
     return http.post("api/precomunidade", precomunidade);
   },
 
+  alterar: (precomunidade) => {
+    return http.put("api/precomunidade", precomunidade);
+  },
+
   delete: (id) => {
     return http.delete("api/precomunidade/" + id);
   },

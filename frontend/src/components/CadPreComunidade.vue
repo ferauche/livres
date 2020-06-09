@@ -13,9 +13,10 @@
                 class="form-control"
                 v-model.trim="precomunidade.nome"
               />
-              <label for="nome">Nome</label>
+              <label for="nome">{{ precomunidadeAlterar.nome }}</label>
             </div>
             <div class="text-right">
+              <router-link to="/precomunidades" type="button" class="btn">Cancelar</router-link>
               <button type="button" class="btn btn-primary" @click="cadastrar()">
                 <i class="fa fa-floppy-o"></i> Cadastrar
               </button>
@@ -31,19 +32,25 @@
 import PreComunidade from "../services/precomunidade";
 
 export default {
+  props: {
+    precomunidadeAlterar: {
+      type: Array
+    }
+  },
   data() {
     return {
-      precomunidade: { nome: "" }
+      precomunidade: { id: 0, nome: "" }
     };
   },
   methods: {
     cadastrar: function() {
-      // if cpf existe
-      // alterar
-      // else
-      this.SalvarPreComunidade();
+      if (this.precomunidade.id != 0) {
+        this.AlterarPreComunidade();
+      } else {
+        this.AdicionarPreComunidade();
+      }
     },
-    SalvarPreComunidade: function() {
+    AdicionarPreComunidade: function() {
       PreComunidade.inserir(this.precomunidade)
         .then(() => {
           this.$toaster.success("Pré-comunidade adicionada com sucesso");
@@ -52,9 +59,27 @@ export default {
         .catch(() => {
           this.$toaster.error("Não foi possível adicionar pré-comunidade");
         });
+    },
+    AlterarPreComunidade: function() {
+      PreComunidade.alterar(this.precomunidade)
+        .then(() => {
+          this.$toaster.success("Pré-comunidade alterada com sucesso");
+          this.$router.push("/precomunidades");
+        })
+        .catch(() => {
+          this.$toaster.success("Não foi possível alterar pré-comunidade");
+        });
+    }
+  },
+  mounted() {
+    if (this.precomunidadeAlterar != null) {
+      this.precomunidade.id = this.precomunidadeAlterar.id;
+    } else {
+      this.precomunidadeAlterar = { nome: "Nome" };
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+</style>
