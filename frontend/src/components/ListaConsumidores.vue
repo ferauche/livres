@@ -73,7 +73,7 @@ export default {
     ExcluirConsumidor: function() {
       Consumidores.delete(this.cpfParaExclusao)
         .then(() => {
-          this.$toaster.error("Consumidor removido com sucesso");
+          this.$toaster.success("Consumidor removido com sucesso");
           this.ListarConsumidores();
         })
         .catch(() => {
@@ -84,7 +84,6 @@ export default {
       this.cpfParaExclusao = _cpf;
     }
   },
-  created() {},
   mounted() {
     this.ListarConsumidores();
   }

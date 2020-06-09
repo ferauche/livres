@@ -108,7 +108,8 @@ export default {
     SalvarConsumidor: function() {
       Consumidores.inserir(this.consumidor)
         .then(() => {
-          this.$toaster.error("Consumidor adicionado com sucesso");
+          this.$toaster.success("Consumidor adicionado com sucesso");
+          this.$router.push("/consumidores");
         })
         .catch(() => {
           this.$toaster.error("Não foi possível adicionar consumidor");
