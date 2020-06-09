@@ -1,7 +1,9 @@
 package br.com.livresbs.livres.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import br.com.livresbs.livres.model.DataEntrega;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +18,6 @@ public class EstoqueProdutorDTO {
 	Integer unidadeMedida_id;
 	Integer quantidade;
 	BigDecimal preco;
-	Integer dataEntrega_id;
+	List<DataEntrega> dataEntregaList;
 	
 }

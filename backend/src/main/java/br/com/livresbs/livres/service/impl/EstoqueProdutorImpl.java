@@ -3,6 +3,7 @@ package br.com.livresbs.livres.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.livresbs.livres.dto.EstoqueProdutorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +30,21 @@ public class EstoqueProdutorImpl implements EstoqueProdutorService{
 	
 	
 	@Override
-	public List<EstoqueProdutor> listarTodosEstoqueProdutor() {
+	public List<EstoqueProdutorDTO> listarTodosEstoqueProdutor() {
 		
-		List<EstoqueProdutor> lista = new ArrayList();
+		List<EstoqueProdutorDTO> lista = new ArrayList();
 		
 		
 		epr.findAll().forEach(x ->{
-			EstoqueProdutor ep = new EstoqueProdutor();
-			ep.setId(x.getId());
-			ep.setDatasEntrega(x.getDatasEntrega());
-			ep.setPreco(x.getPreco());
-			ep.setProduto(x.getProduto());
-			ep.setProdutor(x.getProdutor());
-			ep.setQuantidade(x.getQuantidade());
-			ep.setUnidadeMedida(x.getUnidadeMedida());
-			
+			EstoqueProdutorDTO ep = EstoqueProdutorDTO.builder()
+									.id(x.getId())
+									.preco(x.getPreco())
+									.produto_id(x.getProduto().getId())
+									.produtor_id(x.getProdutor().getCnpj())
+									.quantidade(x.getQuantidade())
+									.unidadeMedida_id(x.getUnidadeMedida().getId())
+									.dataEntregaList(x.getDatasEntrega())
+									.build();
 			lista.add(ep);
 		});
 		

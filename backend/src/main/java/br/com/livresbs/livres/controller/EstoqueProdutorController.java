@@ -2,6 +2,7 @@ package br.com.livresbs.livres.controller;
 
 import java.util.List;
 
+import br.com.livresbs.livres.dto.EstoqueProdutorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class EstoqueProdutorController {
 	
 	@CrossOrigin
 	@GetMapping
-	public List<EstoqueProdutor>listarEstoqueProdutor(){
+	public List<EstoqueProdutorDTO>listarEstoqueProdutor(){
 		return eps.listarTodosEstoqueProdutor();
 	}
 	
