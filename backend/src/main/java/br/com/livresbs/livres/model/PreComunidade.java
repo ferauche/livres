@@ -26,6 +26,7 @@ public class PreComunidade {
     private String Nome;
 
     @OneToMany(mappedBy = "precomunidade")
+    @JsonIgnore
     private List<Consumidor> consumidores;
     
 }
