@@ -29,6 +29,12 @@ public class ConsumidorController {
     }
 
     @CrossOrigin
+    @PutMapping
+    public ResponseEntity<String> editaConsumidor(@RequestBody ConsumidorDTO consumidor){
+        return cons.editaConsumidor(consumidor);
+    }
+
+    @CrossOrigin
     @PostMapping
     public ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con) { return cons.cadastraConsumidor(con); }
     

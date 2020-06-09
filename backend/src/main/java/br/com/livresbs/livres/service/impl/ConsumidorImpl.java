@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +50,7 @@ public class ConsumidorImpl implements ConsumidorService {
         if(!cons.existsById(con.getCpf())) {
             Optional<PreComunidade> oppre = pre.findById(con.getPrecomunidade());
             if(!oppre.isPresent()){
-                //TODO tratamente caso precomunidade nao exista
+                return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
             Consumidor consumidor = Consumidor.builder()
@@ -68,6 +67,32 @@ public class ConsumidorImpl implements ConsumidorService {
         }
         else{
             return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já Cadastrado!");
+        }
+    }
+
+
+    @Override
+    public ResponseEntity<String> editaConsumidor(ConsumidorDTO consumidor) {
+        if(cons.existsById(consumidor.getCpf())) {
+            Optional<PreComunidade> oppre = pre.findById(consumidor.getPrecomunidade());
+            if(!oppre.isPresent()){
+                return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
+            }
+
+            Consumidor con = Consumidor.builder()
+                    .cpf(consumidor.getCpf())
+                    .nome(consumidor.getNome())
+                    .sobrenome(consumidor.getSobrenome())
+                    .senha(consumidor.getSenha())
+                    .precomunidade(oppre.get())
+                    .build();
+
+            cons.save(con);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Editado com Sucesso!");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF não Encontrado!");
         }
     }
 

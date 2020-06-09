@@ -1,5 +1,6 @@
 package br.com.livresbs.livres.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ public class ConsumidorDTO {
     private String nome;
     private String sobrenome;
     private String cpf;
+    @JsonIgnore
     private String senha;
     private Long precomunidade;
 }
