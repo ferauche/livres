@@ -22,7 +22,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="produto in displayedProdutos" :key="produto.id">
+                <tr v-for="produto in produtos" :key="produto.id">
                   <td>{{ produto.nome }}</td>
                   <td>{{ produto.categoria }}</td>
                   <td class="text-right">{{ produto.qtdEstoque }}</td>
@@ -44,9 +44,42 @@
               </tbody>
             </table>
           </div>
-          <div class="row">
+          <div class="row" v-show="maxPages > 1">
             <div class="col">
-              <!-- :click-handler="buscarProdutosPorPagina()" -->
+              <nav>
+                <ul class="pagination2 pagiantionfloat-right">
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      v-if="page != 1"
+                      @click="page--; buscarProdutosPorPagina(page)"
+                    >
+                      <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      class="page-link"
+                      v-for="pageNumber in getPages(page)"
+                      @click="page = pageNumber; buscarProdutosPorPagina(page)"
+                      v-bind:key="pageNumber"
+                      v-bind:class="{active: page === pageNumber}"
+                    >{{pageNumber}}</button>
+                  </li>
+                  <li class="page-item">
+                    <button
+                      type="button"
+                      @click="page++; buscarProdutosPorPagina(page)"
+                      v-if="page < maxPages"
+                      class="page-link"
+                    >
+                      <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
           <div class="row">
@@ -73,41 +106,20 @@ export default {
       produtores: [],
       page: 1,
       perPage: 5,
+      maxPages: 1,
       pages: []
     };
   },
   created() {
-    const that = this;
-    loja.listarCarrinhos(191).then(response => {
-      const carrinho = response.data.produtos;
-      loja.getProdutosDisponiveisVendaByCategoria(191).then(response => {
-        that.produtos = response.data.produtos;
-        that.produtos.map(
-          p =>
-            (p.preco =
-              "R$ " +
-              p.preco.toLocaleString("pt-BR", {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2
-              }))
-        );
-
-        that.produtos.map(
-          p =>
-            (p.qtd = carrinho.find(
-              c => c.estoqueProdutorId === p.estoqueId
-            ).quantidade)
-        );
-      });
-    });
+    this.buscarProdutosPorPagina(1);
   },
   methods: {
-    buscarProdutosPorPagina() {
+    buscarProdutosPorPagina(pagina) {
       const that = this;
       loja.listarCarrinhos(191).then(response => {
         const carrinho = response.data.produtos;
         loja
-          .getProdutosDisponiveisVendaByCategoria(191, that.currentPage)
+          .getProdutosDisponiveisVendaByCategoria(191, pagina)
           .then(response => {
             that.produtos = response.data.produtos;
             that.produtos.map(
@@ -119,13 +131,20 @@ export default {
                     minimumFractionDigits: 2
                   }))
             );
+            if (carrinho.length) {
+              that.produtos.map(
+                p =>
+                  (p.qtd = carrinho.find(
+                    c => c.estoqueProdutorId === p.estoqueId
+                  ).quantidade)
+              );
+            }
 
-            that.produtos.map(
-              p =>
-                (p.qtd = carrinho.find(
-                  c => c.estoqueProdutorId === p.estoqueId
-                ).quantidade)
-            );
+            let min = response.data.paginaAtual;
+            that.maxPages = response.data.totalPaginas;
+            for (let index = min; index <= that.maxPages; index++) {
+              this.pages.push(index);
+            }
           });
       });
     },
@@ -139,6 +158,38 @@ export default {
       loja.sincronizarProduto(191, produto.estoqueId, produto.qtd).then(() => {
         that.$toaster.success("Carrinho atualizado!");
       });
+    },
+    getPages(page) {
+      let min = page - 1;
+      let max = page + 4;
+
+      if (this.maxPages <= 5) { 
+        min = 0;
+        max = this.maxPages;
+      } else {
+        if (max < this.maxPages) {
+          if (min - 2 > 0) {
+            min -= 2;
+            max -= 2;
+          }else {
+            min = 0;
+            max = Math.min(this.maxPages, 5);
+          }
+        } else {
+          min -= 2;
+          max -= 2;
+        }
+
+        if (max - this.maxPages > 0) {
+          min -= max - this.maxPages;
+          max -= max - this.maxPages;
+        }
+      }
+
+      min = Math.max(0, min);
+      //console.log("min", min, "max", max, "over", max - this.maxPages);
+
+      return this.pages.slice(min, max);
     }
   }
 };
