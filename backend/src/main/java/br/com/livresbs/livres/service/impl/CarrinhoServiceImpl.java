@@ -56,7 +56,7 @@ public class CarrinhoServiceImpl implements CarrinhoService {
             } else {
                 repositoryCarrinho.delete(carrinho);
             }
-        } else {
+        } else{
             Optional<Consumidor> consumidorOptional = repositoryConsumidor.findById(cpf);
             if(!consumidorOptional.isPresent()){
                 //TODO Lançar erro quando consumidor não existir
@@ -69,11 +69,13 @@ public class CarrinhoServiceImpl implements CarrinhoService {
             if(estoqueProdutor.getQuantidade() < quantidade){
                 //TODO Lançar erro quando consumidor tentar adicionar produtos amais do que tem disponivel
             }
-            Carrinho carrinho = new Carrinho();
-            carrinho.setQuantidade(quantidade);
-            carrinho.setConsumidor(consumidorOptional.get());
-            carrinho.setEstoqueProdutor(estoqueProdutorOptional.get());
-            repositoryCarrinho.save(carrinho);
+            if(quantidade > 0) {
+                Carrinho carrinho = new Carrinho();
+                carrinho.setQuantidade(quantidade);
+                carrinho.setConsumidor(consumidorOptional.get());
+                carrinho.setEstoqueProdutor(estoqueProdutorOptional.get());
+                repositoryCarrinho.save(carrinho);
+            }
         }
     }
 
