@@ -43,9 +43,23 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	@Override
-	public Optional<Produto> listaProdutoId(Integer id) {
+	public ProdutoDTO listaProdutoId(Integer id) {
 
-		return produtoRepo.findById(id);
+		Optional<Produto> prod = produtoRepo.findById(id);
+
+		ProdutoDTO prodDto;
+		if(!prod.isPresent()){
+
+		}
+
+		prodDto = ProdutoDTO.builder()
+							.id(id)
+							.nome(prod.get().getNome())
+							.categoria(prod.get().getCategoria().getId())
+							.build();
+
+		return prodDto;
+
 	}
 
 	public ResponseEntity<String> cadastrar(@RequestBody ProdutoDTO produto) {

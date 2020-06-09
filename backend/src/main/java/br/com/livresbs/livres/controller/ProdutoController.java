@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,10 +26,14 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<ProdutoDTO> listaProdutos(@RequestBody ProdutoDTO produto) {
+    public List<ProdutoDTO> listaProdutos() {
         return produtoService.listaProdutos();
     }
 
+    @GetMapping("/{id}")
+    public ProdutoDTO listaProdutoId(@PathVariable(value = "id") Integer id) {
+        return produtoService.listaProdutoId(id);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletaProduto(@PathVariable(value = "id") Integer id){
