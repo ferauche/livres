@@ -18,38 +18,38 @@ import br.com.livresbs.livres.model.EstoqueProdutor;
 import br.com.livresbs.livres.service.EstoqueProdutorService;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "estoqueprodutor")
 public class EstoqueProdutorController {
 	
 	@Autowired
 	EstoqueProdutorService eps;
 	
 	@CrossOrigin
-	@GetMapping("/listarTodosEstoqueProdutor")
+	@GetMapping
 	public List<EstoqueProdutor>listarEstoqueProdutor(){
 		return eps.listarTodosEstoqueProdutor();
 	}
 	
 	@CrossOrigin
-	@GetMapping("/listarUnicoEstoqueProdutor/{id}")
+	@GetMapping("/{id}")
 	EstoqueProdutor listarUnicoEstoqueProdutor(@PathVariable(value="id") Integer id) {
 		return eps.listaUnicoEstoqueProdutor(id);
 	}
 	
 	@CrossOrigin
-	@PostMapping("/cadastraEstoqueProdutor")
+	@PostMapping
 	ResponseEntity<String> cadastrarEstoqueProdutor(@RequestBody EstoqueProdutor ep){
 		return eps.cadastraEstoqueProdutor(ep);
 	}
 	
 	@CrossOrigin
-	@PutMapping("/atualizarEstoqueProdutor")
+	@PutMapping
 	ResponseEntity<String> atualizarEstoqueProdutor(@RequestBody EstoqueProdutor ep){
 		return eps.atualizaEstoqueProdutor(ep);
 	}
 	
 	@CrossOrigin
-	@DeleteMapping("/deletarEstoqueProdutor/{id}")
+	@DeleteMapping("/{id}")
 	ResponseEntity<String> deletarEstoqueProdutor(@PathVariable(value="id") Integer id) {
 		return eps.deletaEstoqueProdutor(id);
 	}
