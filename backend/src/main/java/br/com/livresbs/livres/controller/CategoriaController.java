@@ -22,6 +22,16 @@ public class CategoriaController {
         return categoriaService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public CategoriaProduto getCategoriaId(@PathVariable(value = "id") Integer id) {
+        return categoriaService.listaCategoriaId(id);
+    }
+
+    @PutMapping
+    public ResponseEntity<String> editaCategoria(@RequestBody CategoriaProduto categoria){
+        return categoriaService.editaCategoria(categoria);
+    }
+
 
     @PostMapping
     public ResponseEntity<String> cadastraCategoria(@RequestBody CategoriaProduto categoria) {
