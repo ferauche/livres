@@ -40,7 +40,7 @@ export default [
     component: Produtos,
   },
   {
-    path: "/carinho",
+    path: "/carrinho",
     name: "Checkout",
     component: Checkout,
   },
