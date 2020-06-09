@@ -22,7 +22,7 @@ import br.com.livresbs.livres.service.ProdutorService;
 public class ProdutorController {
 
 	@Autowired
-	ProdutorService ps;
+	private ProdutorService ps;
 	
 	@CrossOrigin
 	@GetMapping

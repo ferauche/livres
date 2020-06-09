@@ -22,7 +22,7 @@ import br.com.livresbs.livres.service.EstoqueProdutorService;
 public class EstoqueProdutorController {
 	
 	@Autowired
-	EstoqueProdutorService eps;
+	private EstoqueProdutorService eps;
 	
 	@CrossOrigin
 	@GetMapping
