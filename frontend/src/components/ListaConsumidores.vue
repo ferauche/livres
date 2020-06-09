@@ -51,6 +51,7 @@
 
 <script>
 import Consumidores from "../services/consumidores";
+import PreComunidades from "../services/precomunidade";
 import modalDelete from "./modalDelete";
 
 export default {
@@ -68,9 +69,21 @@ export default {
       Consumidores.listar()
         .then(result => {
           this.consumidores = result.data;
+          this.consumidores.forEach((consumidor, index) => {
+            this.BuscarPreComunidade(index, consumidor.precomunidade);
+          });
         })
         .catch(() => {
           this.$toaster.error("Erro ao carregar lista de consumidores");
+        });
+    },
+    BuscarPreComunidade: function(_idConsumidor, _idPreComunidade) {
+      PreComunidades.buscarPorId(_idPreComunidade)
+        .then(result => {
+          this.consumidores[_idConsumidor].precomunidade = result.data.nome;
+        })
+        .catch(() => {
+          this.$toaster.error("Erro ao buscar pré-comunidades");
         });
     },
     ExcluirConsumidor: function() {

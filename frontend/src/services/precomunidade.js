@@ -5,6 +5,10 @@ export default {
     return http.get("api/precomunidade");
   },
 
+  buscarPorId: (id) => {
+    return http.get("api/precomunidade/" + id);
+  },
+
   inserir: (precomunidade) => {
     return http.post("api/precomunidade", precomunidade);
   },
