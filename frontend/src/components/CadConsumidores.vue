@@ -13,7 +13,7 @@
                 class="form-control"
                 v-model.trim="consumidor.nome"
               />
-              <label :class="{active: preenchido}" for="nome">Nome</label>
+              <label :class="{ active: preenchido }" for="nome">Nome</label>
             </div>
 
             <div class="md-form">
@@ -24,7 +24,7 @@
                 class="form-control"
                 v-model.trim="consumidor.sobrenome"
               />
-              <label :class="{active: preenchido}" for="sobrenome">Sobrenome</label>
+              <label :class="{ active: preenchido }" for="sobrenome">Sobrenome</label>
             </div>
 
             <div v-if="!preenchido" class="md-form">
@@ -43,7 +43,7 @@
                 type="checkbox"
                 class="mb-4"
                 id="alterarSenha"
-                @click="alterarSenha = !alterarSenha"
+                @click="HabilitarTrocaSenha()"
               />
             </div>
 
@@ -155,6 +155,12 @@ export default {
         .catch(() => {
           this.$toaster.error("Erro ao carregar lista pré-comunidades");
         });
+    },
+    HabilitarTrocaSenha: function() {
+      if (this.alterarSenha) {
+        this.consumidor.senha = "";
+      }
+      this.alterarSenha = !this.alterarSenha;
     }
   },
   created() {
