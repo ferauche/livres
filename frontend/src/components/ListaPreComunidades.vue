@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import PreComunidades from "../services/precomunidade";
 import modalDelete from "./modalDelete";
 
 export default {
@@ -52,11 +53,21 @@ export default {
     };
   },
   methods: {
+    listarPreComunidades: function() {
+      PreComunidades.listar()
+        .then(result => {
+          this.precomunidades = result.data;
+        })
+        .catch(() => {
+          this.$toaster.error("Erro ao carregar lista de Pré-comunidades");
+        });
+    },
     ExcluirPrecomunidade: function() {
-      this.$toaster.error("Pré-comunidade Removida com sucesso");
+      this.$toaster.error("Não foi possível remover a pré-comunidade");
     }
   },
-  created() {},
-  mounted() {}
+  mounted() {
+    this.listarPreComunidades();
+  }
 };
 </script>
