@@ -10,7 +10,6 @@ public class ConsumidorDTO {
     private String nome;
     private String sobrenome;
     private String cpf;
-    @JsonIgnore
     private String senha;
     private Long precomunidade;
 }

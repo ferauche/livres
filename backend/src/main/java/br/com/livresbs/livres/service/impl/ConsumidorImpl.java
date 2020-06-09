@@ -55,13 +55,12 @@ public class ConsumidorImpl implements ConsumidorService {
                 return ResponseEntity.status(HttpStatus.OK).body("Pre Comunidade Não Encontrada!");
             }
 
-            String senhaCript = con.getSenha();
 
             Consumidor consumidor = Consumidor.builder()
                     .cpf(con.getCpf())
                     .nome(con.getNome())
                     .sobrenome(con.getSobrenome())
-                    .senha(senhaCript)
+                    .senha(con.getSenha())
                     .precomunidade(oppre.get())
                     .build();
 
