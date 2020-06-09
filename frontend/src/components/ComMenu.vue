@@ -4,9 +4,7 @@
       <li v-for="item in items" :key="item.id">
         <router-link v-bind:to="item.href">
           <i v-bind:class="item.icon"></i>
-          <span class="nav-text">
-            {{ item.name }}
-          </span>
+          <span class="nav-text">{{ item.name }}</span>
         </router-link>
       </li>
     </ul>
@@ -19,32 +17,32 @@ export default {
     return {
       items: [
         {
-          icon: "fa fa-hashtag fa-2x",
+          icon: "fa fa-home fa-2x",
           name: "Home",
-          href: "/",
+          href: "/"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
-          name: "Cad Precomunidade",
-          href: "/cadprecomunidade",
+          icon: "fa fa-users fa-2x",
+          name: "Pré-comunidade",
+          href: "/precomunidades"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
-          name: "Cad Consumidor",
-          href: "/cadconsumidor",
+          icon: "fa fa-user fa-2x",
+          name: "Consumidores",
+          href: "/consumidores"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
+          icon: "fa fa-shopping-basket fa-2x",
           name: "Produtos",
-          href: "/produtos",
+          href: "/produtos"
         },
         {
-          icon: "fa fa-hashtag fa-2x",
-          name: "Checkout",
-          href: "/checkout",
-        },
-      ],
+          icon: "fa fa-shopping-cart fa-2x",
+          name: "Carrinho",
+          href: "/carrinho"
+        }
+      ]
     };
-  },
+  }
 };
 </script>

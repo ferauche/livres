@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface ConsumidorService {
@@ -14,4 +15,6 @@ public interface ConsumidorService {
     Consumidor listaConsumidorUnico(@PathVariable(value = "id") String id);
     ResponseEntity cadastraConsumidor(@RequestBody ConsumidorDTO con);
     void deletarConsumidor(@PathVariable(value = "id") String id);
+
+    ResponseEntity<String> editaConsumidor(ConsumidorDTO consumidor);
 }

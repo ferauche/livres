@@ -40,5 +40,22 @@ public class CategoriaImpl implements CategoriaService {
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com Sucesso!");
     }
 
+    @Override
+    public CategoriaProduto listaCategoriaId(Integer id) {
+        if(!repository.existsById(id)){
+            return null;
+        }
+        return repository.findById(id).get();
+    }
+
+    @Override
+    public ResponseEntity<String> editaCategoria(CategoriaProduto categoria) {
+        if(repository.save(categoria) == null){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi Possível Editar a Categoria!");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("Editado com Sucesso!");
+    }
+
 
 }

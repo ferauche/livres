@@ -1,6 +1,7 @@
 package br.com.livresbs.livres.service;
 
 import br.com.livresbs.livres.model.PreComunidade;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,4 +16,6 @@ public interface PreComunidadeService {
     PreComunidade cadastraPreComunidade(@RequestBody PreComunidade pc);
     
     PreComunidade editaPreComunidade(@RequestBody PreComunidade pc);
+
+    ResponseEntity<String> excluiPreComunidade(long id);
 }
