@@ -5,7 +5,7 @@
     <table class="container table">
       <thead class="thead">
         <tr>
-          <th scope="col">Name</th>
+          <th scope="col">Nome</th>
           <th scope="col">Sobrenome</th>
           <th scope="col">CPF</th>
           <th scope="col">Pré-comunidade</th>
@@ -17,7 +17,7 @@
           <td>{{ consumidor.nome }}</td>
           <td>{{ consumidor.sobrenome }}</td>
           <td>{{ consumidor.cpf }}</td>
-          <td>{{ consumidor.precomunidade }}</td>
+          <td>{{ consumidor.precomunidade }} - {{ consumidor.nomeprecomunidade }}</td>
           <td class="row justify-content-end">
             <router-link
               class="btn btn-outline-primary mr-3"
@@ -68,23 +68,21 @@ export default {
     ListarConsumidores: function() {
       Consumidores.listar()
         .then(result => {
-          this.consumidores = result.data;
-          this.consumidores.forEach((consumidor, index) => {
-            this.BuscarPreComunidade(index, consumidor.precomunidade);
+          result.data.forEach(data => {
+            PreComunidades.buscarPorId(data.precomunidade).then(result => {
+              this.consumidores.push({
+                nome: data.nome,
+                sobrenome: data.sobrenome,
+                cpf: data.cpf,
+                senha: data.senha,
+                precomunidade: data.precomunidade,
+                nomeprecomunidade: result.data.nome
+              });
+            });
           });
         })
         .catch(() => {
           this.$toaster.error("Erro ao carregar lista de consumidores");
-        });
-    },
-    BuscarPreComunidade: function(_idConsumidor, _idPreComunidade) {
-      PreComunidades.buscarPorId(_idPreComunidade)
-        .then(result => {
-          // this.consumidores[_idConsumidor].precomunidade = result.data.nome;
-          console.log(result.data.nome);
-        })
-        .catch(() => {
-          this.$toaster.error("Erro ao buscar pré-comunidades");
         });
     },
     ExcluirConsumidor: function() {
