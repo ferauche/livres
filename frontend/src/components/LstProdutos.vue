@@ -171,7 +171,7 @@ export default {
       let min = page - 1;
       let max = page + 4;
 
-      if (this.maxPages <= 5) { 
+      if (this.maxPages <= 5) {
         min = 0;
         max = this.maxPages;
       } else {
@@ -179,7 +179,7 @@ export default {
           if (min - 2 > 0) {
             min -= 2;
             max -= 2;
-          }else {
+          } else {
             min = 0;
             max = Math.min(this.maxPages, 5);
           }
