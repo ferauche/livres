@@ -32,9 +32,6 @@ public class DataEntrega {
 	@Column(columnDefinition = "DATE")
 	private LocalDate prazoLimitePedido;
 
-	@Enumerated(EnumType.ORDINAL)
-	private StatusDataEntrega status = StatusDataEntrega.NAO_ATIVA;
-
 	@ManyToMany
 	@JoinTable(
 			name = "dataentrega_estoqueprodutor",
@@ -42,5 +39,8 @@ public class DataEntrega {
 			inverseJoinColumns = @JoinColumn(name = "estoqueprodutor_id")
 	)
 	private List<EstoqueProdutor> estoques;
+
+	@OneToMany(mappedBy = "dataEntrega")
+    private Preco preco;
 	
 }
