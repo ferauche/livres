@@ -32,14 +32,6 @@ public class DataEntrega {
 	@Column(columnDefinition = "DATE")
 	private LocalDate prazoLimitePedido;
 
-	@ManyToMany
-	@JoinTable(
-			name = "dataentrega_estoqueprodutor",
-			joinColumns = @JoinColumn(name = "dataentrega_id"),
-			inverseJoinColumns = @JoinColumn(name = "estoqueprodutor_id")
-	)
-	private List<EstoqueProdutor> estoques;
-
 	@OneToMany(mappedBy = "dataEntrega")
     private Preco preco;
 	
