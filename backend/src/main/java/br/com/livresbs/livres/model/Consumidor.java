@@ -32,7 +32,7 @@ public class Consumidor {
     private String senha;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "precomunidade")
+    @JoinColumn(name = "precomunidade_id")
     @NotNull
     @JsonBackReference
     private PreComunidade precomunidade;
