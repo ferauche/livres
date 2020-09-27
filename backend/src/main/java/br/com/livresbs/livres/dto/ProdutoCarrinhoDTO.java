@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class ProdutoCarrinhoDTO {
 
     @NotNull
-    private Integer estoqueProdutorId;
+    private Long cotacaoId;
 
     @NotNull
     @Min(0)

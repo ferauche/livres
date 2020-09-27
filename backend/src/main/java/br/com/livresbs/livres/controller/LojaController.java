@@ -48,9 +48,9 @@ public class LojaController {
     ) {
         carrinhoService.sincronizarProduto(
                 cpf,
-                produtoCarrinhoDTO.getEstoqueProdutorId(),
+                produtoCarrinhoDTO.getCotacaoId(),
                 produtoCarrinhoDTO.getQuantidade()
-        ) ;
+        );
     }
 
     @GetMapping("/carrinhos")
@@ -67,5 +67,6 @@ public class LojaController {
     public CheckoutDTO checkout(@RequestHeader("cpf") String cpf) {
         return pedidoService.checkout(cpf);
     }
+
 
 }

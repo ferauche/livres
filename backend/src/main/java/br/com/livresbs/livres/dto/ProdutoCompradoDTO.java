@@ -3,12 +3,14 @@ package br.com.livresbs.livres.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 public class ProdutoCompradoDTO {
 
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
     private Double quantidade;
 
 }

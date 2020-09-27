@@ -48,14 +48,14 @@ public class PedidoServiceImpl implements PedidoService {
 
             produtos.add(
                 ProdutoCompradoDTO.builder()
-                    .nome(itemCarrinho.getEstoqueProdutor().getProduto().getNome())
-                    .preco(itemCarrinho.getEstoqueProdutor().getPreco().doubleValue())
+                    .nome(itemCarrinho.getCotacao().getProduto().getNome())
+                    .preco(itemCarrinho.getCotacao().getPreco())
                     .quantidade(itemCarrinho.getQuantidade().doubleValue())
                     .build()
             );
 
             valorTotal = valorTotal.add(
-                    itemCarrinho.getEstoqueProdutor().getPreco().multiply(
+                    itemCarrinho.getCotacao().getPreco().multiply(
                             new BigDecimal(itemCarrinho.getQuantidade())
                     )
             );

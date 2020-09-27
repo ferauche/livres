@@ -16,8 +16,8 @@ public class Carrinho {
     private Integer quantidade;
 
     @ManyToOne
-    @JoinColumn(name = "estoqueprodutor_id")
-    private EstoqueProdutor estoqueProdutor;
+    @JoinColumn(name = "cotacao_id")
+    private Cotacao cotacao;
 
     @ManyToOne
     @JoinColumn(name = "consumidor_id")

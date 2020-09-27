@@ -3,10 +3,10 @@ package br.com.livresbs.livres.service.impl;
 import br.com.livresbs.livres.config.properties.ApplicationProperty;
 import br.com.livresbs.livres.dto.ProdutoDisponivelDTO;
 import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
+import br.com.livresbs.livres.model.Cotacao;
 import br.com.livresbs.livres.model.DataEntrega;
-import br.com.livresbs.livres.model.EstoqueProdutor;
+import br.com.livresbs.livres.repository.CotacaoRepository;
 import br.com.livresbs.livres.repository.DataEntregaRepository;
-import br.com.livresbs.livres.repository.EstoqueProdutorRepository;
 import br.com.livresbs.livres.service.LojaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LojaServiceImpl implements LojaService {
@@ -25,7 +26,7 @@ public class LojaServiceImpl implements LojaService {
     private DataEntregaRepository dataEntregaRepository;
 
     @Autowired
-    private EstoqueProdutorRepository estoqueProdutorRepository;
+    private CotacaoRepository cotacaoRepository;
 
     @Autowired
     private ApplicationProperty applicationProperty;
@@ -44,28 +45,27 @@ public class LojaServiceImpl implements LojaService {
                 applicationProperty.getQuantidadeIntesPagina()
         );
 
-        Page<EstoqueProdutor> estoques;
+        Page<Cotacao> cotacoes;
 
-        if (null != categorias && !categorias.isEmpty())
-            estoques = estoqueProdutorRepository.findByDatasEntregaAndProdutoCategoriaNomeIn(
+        if (Objects.nonNull(categorias) && !categorias.isEmpty())
+            cotacoes = cotacaoRepository.findByDatasEntregaAndProdutoCategoriaIn(
                     dataEntrega,
                     categorias,
                     pageRequest
             );
         else
-            estoques = estoqueProdutorRepository.findByDatasEntrega(dataEntrega, pageRequest);
+            cotacoes = cotacaoRepository.findByDatasEntrega(dataEntrega, pageRequest);
 
         List<ProdutoDisponivelDTO> produtos = new ArrayList<>(applicationProperty.getQuantidadeIntesPagina());
 
-        estoques.forEach(estoqueProdutor -> {
+        cotacoes.forEach(cotacao -> {
 
             ProdutoDisponivelDTO produtoDisponivel = ProdutoDisponivelDTO.builder()
-                    .estoqueId(estoqueProdutor.getId())
-                    .nome(estoqueProdutor.getProduto().getNome())
-                    .preco(estoqueProdutor.getPreco().doubleValue())
-                    .categoria(estoqueProdutor.getProduto().getCategoria().getNome())
-                    .quantidade(BigDecimal.valueOf(estoqueProdutor.getQuantidade()).setScale(2, RoundingMode.HALF_UP))
-                    .unidadeMedida(estoqueProdutor.getUnidadeMedida().getNome())
+                    .cotacaoId(cotacao.getId())
+                    .nome(cotacao.getProduto().getNome())
+                    .preco(cotacao.getPreco())
+                    .categoria(cotacao.getProduto().getCategoria())
+                    .unidadeMedida(cotacao.getProduto().getUnidade())
                     .build();
 
             produtos.add(produtoDisponivel);
@@ -75,7 +75,7 @@ public class LojaServiceImpl implements LojaService {
         return ProdutosDisponiveisDTO.builder()
                 .produtos(produtos)
                 .paginaAtual(pagina)
-                .totalPaginas(estoques.getTotalPages())
+                .totalPaginas(cotacoes.getTotalPages())
                 .build();
 
     }

@@ -5,11 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@Table(name = "pedidos")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -31,11 +41,11 @@ public class Pedido {
 
     @ManyToMany
     @JoinTable(
-        name = "pedido_estoqueprodutor",
+        name = "pedido_cotacoes",
         joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "estoqueprodutor_id")
+        inverseJoinColumns = @JoinColumn(name = "contacao_id")
     )
-    private List<EstoqueProdutor> estoques;
+    private List<Cotacao> cotacoes;
 
     @ManyToOne
     @JoinColumn(name = "metodo_id")

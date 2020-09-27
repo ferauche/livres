@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.math.BigDecimal;
@@ -16,15 +17,13 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Preco {
+public class Cotacao {
 
-    @Column(name = "produto_id")
-    private Integer produtoId;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    @Column(name = "dataentrega_id")
-    private Long dataEntregaId;
-
-    private BigDecimal valor;
+    private BigDecimal preco;
 
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "produto_id")

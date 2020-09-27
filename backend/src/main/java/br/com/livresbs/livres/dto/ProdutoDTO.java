@@ -1,6 +1,5 @@
 package br.com.livresbs.livres.dto;
 
-import br.com.livresbs.livres.model.CategoriaProduto;
 import lombok.Builder;
 import lombok.Data;
 
