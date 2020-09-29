@@ -33,8 +33,8 @@ public class ProdutorImpl implements ProdutorService {
 	@Override
 	public ResponseEntity<String> cadastraProdutor(Produtor produtor) {
 		
-		if(pr.existsById(produtor.getCnpj())) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Produtor de CNPJ "+ produtor.getCnpj() + " já está cadastrado!");
+		if(pr.existsById(produtor.getProdutor())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Produtor de CNPJ "+ produtor.getProdutor() + " já está cadastrado!");
 		}
 		pr.save(produtor);
 		return ResponseEntity.ok("Produtor cadastrado com sucesso!");
@@ -42,7 +42,7 @@ public class ProdutorImpl implements ProdutorService {
 
 	@Override
 	public ResponseEntity<String> atualizaProduto(Produtor produtor) {
-		if(pr.existsById(produtor.getCnpj())) {
+		if(pr.existsById(produtor.getProdutor())) {
 			pr.save(produtor);
 			//TODO testar para ver se funciona
 			return ResponseEntity.status(HttpStatus.OK).body("Produtor cadastrado com sucesso!");
