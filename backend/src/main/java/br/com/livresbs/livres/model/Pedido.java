@@ -5,17 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -34,19 +24,14 @@ public class Pedido {
     private BigDecimal valorTotal;
 
     @Enumerated(EnumType.ORDINAL)
-    private StatusPedido status = StatusPedido.PENDENTE_PAGAMENTO;
+    private StatusPedido status = StatusPedido.CRIADO;
 
     @ManyToOne
     @JoinColumn(name = "consumidor_id")
     private Consumidor consumidor;
 
-    @ManyToMany
-    @JoinTable(
-        name = "pedido_cotacoes",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "contacao_id")
-    )
-    private List<Cotacao> cotacoes;
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itemPedidos;
 
     @ManyToOne
     @JoinColumn(name = "metodo_id")
