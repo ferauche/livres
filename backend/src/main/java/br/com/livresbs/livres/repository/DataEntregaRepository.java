@@ -1,7 +1,6 @@
 package br.com.livresbs.livres.repository;
 
 import br.com.livresbs.livres.model.DataEntrega;
-import br.com.livresbs.livres.model.StatusDataEntrega;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +20,5 @@ public interface DataEntregaRepository extends JpaRepository<DataEntrega, Long> 
     )
     DataEntrega encontrarDataEntregaAtivaConsumidor(@Param("cpf") String cpf);
 
-    List<DataEntrega> findByStatus(StatusDataEntrega status);
 
 }
