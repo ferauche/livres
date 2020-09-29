@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_data_entrega")
@@ -32,6 +33,6 @@ public class DataEntrega {
 	private LocalDate prazoLimitePedido;
 
 	@OneToMany(mappedBy = "dataEntrega")
-    private Cotacao cotacao;
+    private List<Cotacao> cotacao;
 	
 }

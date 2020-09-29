@@ -48,13 +48,13 @@ public class LojaServiceImpl implements LojaService {
         Page<Cotacao> cotacoes;
 
         if (Objects.nonNull(categorias) && !categorias.isEmpty())
-            cotacoes = cotacaoRepository.findByDatasEntregaAndProdutoCategoriaIn(
+            cotacoes = cotacaoRepository.findByDataEntregaAndProdutoCategoriaIn(
                     dataEntrega,
                     categorias,
                     pageRequest
             );
         else
-            cotacoes = cotacaoRepository.findByDatasEntrega(dataEntrega, pageRequest);
+            cotacoes = cotacaoRepository.findByDataEntrega(dataEntrega, pageRequest);
 
         List<ProdutoDisponivelDTO> produtos = new ArrayList<>(applicationProperty.getQuantidadeIntesPagina());
 

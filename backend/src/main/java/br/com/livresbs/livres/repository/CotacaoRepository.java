@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface CotacaoRepository extends JpaRepository<Cotacao, Long> {
 
-    Page<Cotacao> findByDatasEntregaAndProdutoCategoriaIn(
+    Page<Cotacao> findByDataEntregaAndProdutoCategoriaIn(
             DataEntrega dataEntrega,
             List<String> categorias,
             Pageable pageable
     );
 
-    Page<Cotacao> findByDatasEntrega(DataEntrega dataEntrega, Pageable pageable);
+    Page<Cotacao> findByDataEntrega(DataEntrega dataEntrega, Pageable pageable);
 
 }

@@ -17,6 +17,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "produtos")
@@ -58,6 +59,6 @@ public class Produto {
     private Integer mensal;
 
     @OneToMany(mappedBy = "produto")
-    private Cotacao cotacao;
+    private List<Cotacao> cotacao;
 
 }
