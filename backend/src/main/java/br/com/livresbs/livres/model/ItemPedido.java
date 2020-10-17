@@ -24,8 +24,7 @@ public class ItemPedido {
     private Pedido pedido;
 
     @OneToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
-
+    @JoinColumn(name = "cotacao_id")
+    private Cotacao cotacao;
 
 }

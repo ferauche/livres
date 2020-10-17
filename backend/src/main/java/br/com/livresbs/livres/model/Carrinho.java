@@ -13,7 +13,7 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer quantidade;
+    private Double quantidade;
 
     @ManyToOne
     @JoinColumn(name = "cotacao_id")

@@ -15,6 +15,6 @@ public class ProdutoCarrinhoDTO {
 
     @NotNull
     @Min(0)
-    private Integer quantidade;
+    private Double quantidade;
 
 }

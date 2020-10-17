@@ -5,6 +5,6 @@ import br.com.livresbs.livres.dto.ProdutoCarrinhoDTO;
 import java.util.List;
 
 public interface CarrinhoService {
-    void sincronizarProduto(String cpf, Long cotacaoId, Integer quantidade);
+    void sincronizarProduto(String cpf, Long cotacaoId, Double quantidade);
     CarrinhoDTO listarCarrinhos(String cpf);
 }

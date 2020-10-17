@@ -7,7 +7,6 @@ import br.com.livresbs.livres.model.Carrinho;
 import br.com.livresbs.livres.model.Consumidor;
 import br.com.livresbs.livres.model.Cotacao;
 import br.com.livresbs.livres.repository.CarrinhoRepository;
-
 import br.com.livresbs.livres.repository.ConsumidorRepository;
 import br.com.livresbs.livres.repository.CotacaoRepository;
 import br.com.livresbs.livres.service.CarrinhoService;
@@ -38,7 +37,7 @@ public class CarrinhoServiceImpl implements CarrinhoService {
          formato enviado (real ou inteiro) de acordo com o tipo de unidade de medida associado ao estoque.
      */
     @Override
-    public void sincronizarProduto(String cpf, Long cotacaoId, Integer quantidade) {
+    public void sincronizarProduto(String cpf, Long cotacaoId, Double quantidade) {
         Optional<Carrinho> carrinhoOptional = repositoryCarrinho.findByConsumidorCpfAndCotacaoId(cpf, cotacaoId);
         if(carrinhoOptional.isPresent()){
 

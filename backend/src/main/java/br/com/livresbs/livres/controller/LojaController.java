@@ -68,5 +68,10 @@ public class LojaController {
         return pedidoService.checkout(cpf);
     }
 
+    @PostMapping("/pedidos")
+    public void salvarPedido(@RequestHeader("cpf") String cpf){
+        pedidoService.salvarPedido(cpf);
+    }
+
 
 }
