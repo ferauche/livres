@@ -15,12 +15,13 @@ import javax.persistence.*;
 public class ItemPedido {
 
     @Id
-    private Long pedidoId;
+    @GeneratedValue
+    private Long id;
 
     private Double quantidade;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
     @OneToOne
