@@ -2,6 +2,7 @@ package br.com.livresbs.livres.service.impl;
 
 import br.com.livresbs.livres.config.properties.MessageProperty;
 import br.com.livresbs.livres.dto.MetodoPagamentoDTO;
+import br.com.livresbs.livres.dto.PedidoDTO;
 import br.com.livresbs.livres.dto.ProdutoCompradoDTO;
 import br.com.livresbs.livres.dto.CheckoutDTO;
 import br.com.livresbs.livres.exception.CarrinhoVazioException;
@@ -121,4 +122,13 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setItemPedidos(itemPedidos);
         pedidoRepository.save(pedido);
     }
+
+    @Override
+    public PedidoDTO consultarPedido(StatusPedido status){
+        List<Pedido> pedidos = pedidoRepository.findByStatusPedido(status);
+        return PedidoDTO.builder()
+                .pedidos(pedidos)
+                .build();
+    }
+
 }
