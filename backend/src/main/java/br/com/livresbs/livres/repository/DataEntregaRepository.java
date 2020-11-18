@@ -16,8 +16,8 @@ public interface DataEntregaRepository extends JpaRepository<DataEntrega, Long> 
                     "inner join tb_consumidor c " +
                     "on c.precomunidade_id = pre.id " +
                     "where c.cpf = :cpf " +
-                    "and de.prazoLimitePedido >= CURDATE() " +
-                    "order by de.prazoLimitePedido asc limit 1",
+                    "and de.prazo_limite_pedido >= CURDATE() " +
+                    "order by de.prazo_limite_pedido asc limit 1",
             nativeQuery = true
     )
     DataEntrega encontrarDataEntregaAtivaConsumidor(@Param("cpf") String cpf);
