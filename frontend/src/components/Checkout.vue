@@ -27,7 +27,7 @@
               </tbody>
             </table>
           </div>
-          <div class="text-right" v-show="valorTotal">
+          <div class="text-right">
             <h4>Valor total: {{ valorTotal }}</h4>
           </div>
           <div class="text-right">
@@ -356,23 +356,19 @@ export default {
   },
   created() {
     const that = this;
-    loja.checkout(191).then(response => {
-      if (response.data.mensagem) {
-        this.$toaster.error(response.data.mensagem);
-      } else {
-        that.produtos = response.data.produtos;
+    loja.getCheckout(191).then(response => {
+      that.produtos = response.data.produtos;
 
-        if (that.produtos.length) {
-          that.produtos.map(
-            p =>
-              (p.preco =
-                "R$ " +
-                p.preco.toLocaleString("pt-BR", {
-                  maximumFractionDigits: 2,
-                  minimumFractionDigits: 2
-                }))
-          );
-        }
+      if(that.produtos){
+        that.produtos.map(
+          p =>
+            (p.preco =
+              "R$ " +
+              p.preco.toLocaleString("pt-BR", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+              }))
+        );
 
         that.valorTotal =
           "R$ " +
@@ -415,7 +411,11 @@ export default {
       return metodo ? metodo.meiosPagamento : [];
     },
     finalizarPedido() {
-      this.$toaster.error("Função não implementada");
+      
+      loja.postCheckout(191).then(() => {
+        this.$toaster.success("Pedido enviado");
+      });
+
     }
   }
 };

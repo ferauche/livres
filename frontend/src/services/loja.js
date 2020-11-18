@@ -1,13 +1,22 @@
 import { http } from "./config";
 
 export default {
-    checkout: (cpf) => {
+    getCheckout: (cpf) => {
         return http.get("/api/loja/pedidos", {
             headers: {
                 cpf: cpf
             }
         });
     },
+    
+    postCheckout: (cpf) => {
+        return http.get("/api/loja/pedidos", {
+            headers: {
+                cpf: cpf
+            }
+        });
+    },
+
 
     getProdutosDisponiveisVendaByCategoria: (cpf, pagina) => {
         return http.get("/api/loja/produtos", {
@@ -30,7 +39,7 @@ export default {
 
     sincronizarProduto: (cpf, estoqueProdutorId, quantidade) => {
         return http.post("/api/loja/carrinhos", {
-            estoqueProdutorId: estoqueProdutorId,
+            cotacaoId: estoqueProdutorId,
             quantidade: quantidade
         }, { headers: { cpf: cpf } });
     },
