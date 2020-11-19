@@ -144,11 +144,11 @@
               </div>
             </div>
             <div class="text-right">
-              <button type="button" class="btn btn-primary" @click="prev()">
+              <button id="btn-voltar-endereco" type="button" class="btn btn-primary" @click="prev()">
                 Voltar
                 <i class="fa fa-reply"></i>
               </button>
-              <button type="button" class="btn btn-primary" @click="next()">
+              <button id="btn-continuar-endereco" type="button" class="btn btn-primary" @click="next()">
                 Continuar
                 <i class="fa fa-share"></i>
               </button>
@@ -164,7 +164,7 @@
           <form>
             <div class="pt-3"></div>
             <div class="select">
-              <select class="select-text" required v-model="metodoPagamento">
+              <select id="metodo" class="select-text" required v-model="metodoPagamento">
                 <option disabled selected></option>
                 <option
                   v-for="option in metodosPagamento"
@@ -179,7 +179,7 @@
             <div class="pt-3"></div>
             <div class="pt-3"></div>
             <div class="select" v-show="metodoPagamento">
-              <select class="select-text" required v-model="meioPagamento">
+              <select id="meio" class="select-text" required v-model="meioPagamento">
                 <option disabled selected></option>
                 <option
                   v-for="option in getMeiosPagamento()"
@@ -189,15 +189,16 @@
               </select>
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
-              <label class="select-label">Forma de Pagamento:</label>
+              <label class="select-label">Meio de Pagamento:</label>
             </div>
             <div class="pt-3"></div>
             <div class="text-right">
-              <button type="button" class="btn btn-primary" @click="prev()">
+              <button id="btn-voltar-pagamento" type="button" class="btn btn-primary" @click="prev()">
                 Voltar
                 <i class="fa fa-reply"></i>
               </button>
               <button
+                id="btn-continuar-pagamento"
                 type="button"
                 class="btn btn-primary"
                 @click="next()"
@@ -218,49 +219,49 @@
           <div class="card">
             <div class="card-header">Dados de Entrega</div>
             <div class="card-body">
-              <div class="row">
+              <div id="nome" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Nome:</span>
                   {{ nome }}
                 </label>
               </div>
-              <div class="row">
+              <div id="cep-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">CEP:</span>
                   {{ cep }}
                 </label>
               </div>
-              <div class="row">
+              <div id="uf-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">UF:</span>
                   {{ estado }}
                 </label>
               </div>
-              <div class="row">
+              <div id="cidade-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Cidade:</span>
                   {{ cidade }}
                 </label>
               </div>
-              <div class="row">
+              <div id="bairro-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Bairro:</span>
                   {{ bairro }}
                 </label>
               </div>
-              <div class="row">
+              <div id="endereco-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Endereço:</span>
                   {{ endereco }}
                 </label>
               </div>
-              <div class="row">
+              <div id="numero-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Nº:</span>
                   {{ numero }}
                 </label>
               </div>
-              <div class="row">
+              <div id="complemento-endereco" class="row">
                 <label class="col">
                   <span class="font-weight-bold">Complemento:</span>
                   {{ complemento }}
@@ -272,15 +273,15 @@
           <div class="card">
             <div class="card-header">Forma de Pagamento</div>
             <div class="card-body">
-              <div class="row">
+              <div id="metodo-pagamento" class="row">
                 <label class="col">
-                  <span class="font-weight-bold">Modalidade:</span>
+                  <span class="font-weight-bold">Método:</span>
                   {{ metodoPagamento }}
                 </label>
               </div>
-              <div class="row">
+              <div id="meio-pagamento" class="row">
                 <label class="col">
-                  <span class="font-weight-bold">Método:</span>
+                  <span class="font-weight-bold">Meio:</span>
                   {{ meioPagamento }}
                 </label>
               </div>
@@ -305,22 +306,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="produto in produtos" :key="produto.id">
+                    <tr v-for="produto in produtos" :key="produto.cotacaoId" :id="produto.cotacaoId">
                       <td>{{ produto.nome }}</td>
-                      <td class="text-right">{{ produto.quantidade }}</td>
-                      <td class="text-right">{{ produto.preco }}</td>
+                      <td class="quantidade text-right">{{ produto.quantidade }}</td>
+                      <td class="preco text-right">{{ produto.preco }}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div class="text-right">
+              <div id="valor-total" class="text-right">
                 <h4>Valor total: {{ valorTotal }}</h4>
               </div>
             </div>
           </div>
           <div class="pt-2"></div>
           <div class="text-right">
-            <button type="button" class="btn btn-success" @click="finalizarPedido()">
+            <button id="finalizar-pedido" type="button" class="btn btn-success" @click="finalizarPedido()">
               <i class="fa fa-shopping-cart"></i> Finalizar Pedido
             </button>
           </div>
