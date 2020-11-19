@@ -10,4 +10,5 @@ public interface PedidoService {
     CheckoutDTO checkout(String cpfConsumidor);
     void salvarPedido(String cpfConsumidor);
     PedidoDTO consultarPedido(StatusPedido status);
+    void alterarStatusPedido(Long id, StatusPedido statusPedido);
 }

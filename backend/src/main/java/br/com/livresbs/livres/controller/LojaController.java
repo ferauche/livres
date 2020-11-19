@@ -82,5 +82,5 @@ public class LojaController {
         return  pedidoService.consultarPedido(status);
     }
 
-
+    
 }

@@ -131,4 +131,11 @@ public class PedidoServiceImpl implements PedidoService {
                 .build();
     }
 
+    @Override
+    public void alterarStatusPedido(Long id, StatusPedido statusPedido) {
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(id);
+        Pedido pedido = pedidoOptional.get();
+        pedido.setStatus(statusPedido);
+        pedidoRepository.save(pedido);
+    }
 }
