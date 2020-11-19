@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="row">
     <div class="col-md-8 col-sm-12 offset-md-2">
       <div class="card">
@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="produto in produtos" :key="produto.id">
+                <tr v-for="produto in produtos" :key="produto.cotacaoId" :id="produto.cotacaoId">
                   <td>{{ produto.nome }}</td>
                   <td>{{ produto.categoria }}</td>
                   <td class="text-right">{{ produto.preco }}</td>
@@ -31,7 +31,6 @@
                       autocomplete="off"
                       type="number"
                       min="0"
-                      v-bind:max="produto.qtdEstoque"
                       value="0"
                       v-model="produto.qtd"
                       @change="updateCarrinho(produto)"
