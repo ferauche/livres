@@ -27,7 +27,7 @@
                   <td class="text-right">{{ produto.preco }}</td>
                   <td style="cursor: pointer;" class="text-center">
                     <input
-                      class="form-control form-control-sm text-right"
+                      class="form-control form-control-sm text-right qtd-produto-input"
                       autocomplete="off"
                       type="number"
                       min="0"
