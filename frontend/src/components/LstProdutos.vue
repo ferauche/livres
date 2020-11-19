@@ -48,7 +48,7 @@
           </div>
           <div class="row">
             <div class="col text-right">
-              <button class="btn btn-primary" @click="$router.push('/carinho')">
+              <button class="btn btn-primary" @click="$router.push('/carrinho')">
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i> Ir até
                 o Carrinho
               </button>
