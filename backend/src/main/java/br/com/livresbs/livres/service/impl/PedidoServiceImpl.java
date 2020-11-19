@@ -125,7 +125,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public PedidoDTO consultarPedido(StatusPedido status){
-        List<Pedido> pedidos = pedidoRepository.findByStatusPedido(status);
+        List<Pedido> pedidos = pedidoRepository.findByStatus(status);
         return PedidoDTO.builder()
                 .pedidos(pedidos)
                 .build();
