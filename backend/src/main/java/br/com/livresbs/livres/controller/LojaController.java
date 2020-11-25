@@ -80,5 +80,10 @@ public class LojaController {
         return  pedidoService.consultarPedido(status);
     }
 
+    @PutMapping("/pedidos/{idPedido}/")
+    public void salvarResultadoAvaliacao(@PathVariable Long idPedido, @RequestBody @Valid AvaliacaoPedidoDTO body) {
+
+    }
+
     
 }

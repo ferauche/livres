@@ -1,5 +1,6 @@
 package br.com.livresbs.livres.service;
 
+import br.com.livresbs.livres.dto.AvaliacaoPedidoDTO;
 import br.com.livresbs.livres.dto.CheckoutDTO;
 import br.com.livresbs.livres.dto.FinalizarPedidoDTO;
 import br.com.livresbs.livres.dto.PedidoDTO;
@@ -11,5 +12,5 @@ public interface PedidoService {
     CheckoutDTO checkout(String cpfConsumidor);
     void salvarPedido(String cpfConsumidor, FinalizarPedidoDTO body);
     PedidoDTO consultarPedido(StatusPedido status);
-    void alterarStatusPedido(Long id, StatusPedido statusPedido);
+    void avaliarPedido(Long idPedido, AvaliacaoPedidoDTO avaliacao);
 }

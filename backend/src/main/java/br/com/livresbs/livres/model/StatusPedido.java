@@ -3,7 +3,8 @@ package br.com.livresbs.livres.model;
 public enum StatusPedido {
 
     CRIADO,
-    VALIDADO,
+    CANCELADO,
+    PENDENTE_ENTREGA,
     ENTREGUE;
 
 }

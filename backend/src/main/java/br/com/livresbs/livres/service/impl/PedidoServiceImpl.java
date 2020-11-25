@@ -1,13 +1,24 @@
 package br.com.livresbs.livres.service.impl;
 
 import br.com.livresbs.livres.config.properties.MessageProperty;
+import br.com.livresbs.livres.dto.AlteracaoItemCarrinhoDTO;
+import br.com.livresbs.livres.dto.AvaliacaoPedidoDTO;
+import br.com.livresbs.livres.dto.CheckoutDTO;
 import br.com.livresbs.livres.dto.FinalizarPedidoDTO;
 import br.com.livresbs.livres.dto.MetodoPagamentoDTO;
+import br.com.livresbs.livres.dto.OperacaoAvaliacaoPedido;
 import br.com.livresbs.livres.dto.PedidoDTO;
 import br.com.livresbs.livres.dto.ProdutoCompradoDTO;
-import br.com.livresbs.livres.dto.CheckoutDTO;
 import br.com.livresbs.livres.exception.CarrinhoVazioException;
-import br.com.livresbs.livres.model.*;
+import br.com.livresbs.livres.exception.LivresException;
+import br.com.livresbs.livres.model.Carrinho;
+import br.com.livresbs.livres.model.Consumidor;
+import br.com.livresbs.livres.model.EnderecoEntrega;
+import br.com.livresbs.livres.model.ItemPedido;
+import br.com.livresbs.livres.model.MeioPagamento;
+import br.com.livresbs.livres.model.MetodoPagamento;
+import br.com.livresbs.livres.model.Pedido;
+import br.com.livresbs.livres.model.StatusPedido;
 import br.com.livresbs.livres.repository.CarrinhoRepository;
 import br.com.livresbs.livres.repository.ConsumidorRepository;
 import br.com.livresbs.livres.repository.EnderecoEntregaRepository;
@@ -18,14 +29,16 @@ import br.com.livresbs.livres.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -168,10 +181,24 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public void alterarStatusPedido(Long id, StatusPedido statusPedido) {
-        Optional<Pedido> pedidoOptional = pedidoRepository.findById(id);
-        Pedido pedido = pedidoOptional.get();
-        pedido.setStatus(statusPedido);
-        pedidoRepository.save(pedido);
+    public void avaliarPedido(Long idPedido, AvaliacaoPedidoDTO avaliacao) {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new LivresException("pedido não achado"));
+
+        if (avaliacao.getOperacao().equals(OperacaoAvaliacaoPedido.CANCELAR_PEDIDO)) {
+            pedido.setStatus(StatusPedido.CANCELADO);
+        }
+        else {
+            pedido.setStatus(StatusPedido.PENDENTE_ENTREGA);
+            pedidoRepository.save(pedido);
+
+            if (nonNull(avaliacao.getAlteracoes()))
+                avaliacao.getAlteracoes().forEach((AlteracaoItemCarrinhoDTO alteracao) -> {
+                    ItemPedido item = itemPedidoRepository.findById(alteracao.getId())
+                            .orElseThrow(() -> new LivresException("item do pedido, não achado"));
+                    item.setQuantidade(alteracao.getQuantidade());
+                    itemPedidoRepository.save(item);
+                });
+        }
     }
 }
