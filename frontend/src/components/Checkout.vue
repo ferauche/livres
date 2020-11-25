@@ -52,7 +52,7 @@
                 class="form-control"
                 v-model.trim="nome"
               />
-              <label for="nome">Nome</label>
+              <label for="nome">Nome do destinatario</label>
             </div>
             <div class="row">
               <div class="col-md-2">
@@ -412,8 +412,22 @@ export default {
       return metodo ? metodo.meiosPagamento : [];
     },
     finalizarPedido() {
-      
-      loja.postCheckout(191).then(() => {
+      const that = this;
+      loja.postCheckout(
+        191,
+        {
+          "destinatario": that.nome,
+          "cep": that.cep,
+          "estado": that.estado,
+          "cidade": that.cidade,
+          "bairro": that.bairro,
+          "endereco": that.endereco,
+          "numero": that.numero,
+          "complemento": that.complemento,
+          "metodoPagamento": that.metodoPagamento,
+          "meioPagamento": that.meioPagamento
+        }
+      ).then(() => {
         this.$toaster.success("Pedido enviado");
       });
 

@@ -14,4 +14,6 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
 
     List<Carrinho> findByConsumidorCpf(String cpf);
 
+    void deleteByConsumidorCpf(String cpf);
+
 }

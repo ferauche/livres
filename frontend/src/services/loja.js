@@ -9,8 +9,8 @@ export default {
         });
     },
     
-    postCheckout: (cpf) => {
-        return http.get("/api/loja/pedidos", {
+    postCheckout: (cpf, body) => {
+        return http.post("/api/loja/pedidos", body, {
             headers: {
                 cpf: cpf
             }

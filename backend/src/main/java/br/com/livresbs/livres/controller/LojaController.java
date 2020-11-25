@@ -69,10 +69,8 @@ public class LojaController {
     }
 
     @PostMapping("/pedidos")
-    public void salvarPedido(
-            @RequestHeader(value = "cpf") String cpf){
-
-        pedidoService.salvarPedido(cpf);
+    public void salvarPedido(@RequestHeader(value = "cpf") String cpf, @RequestBody FinalizarPedidoDTO body){
+        pedidoService.salvarPedido(cpf, body);
     }
 
     @GetMapping("/pedidos/salvos")
