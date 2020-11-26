@@ -8,10 +8,9 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class ProdutoDisponivelDTO {
-    private Integer estoqueId;
+    private Long cotacaoId;
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
     private String categoria;
-    private BigDecimal quantidade;
     private String unidadeMedida;
 }

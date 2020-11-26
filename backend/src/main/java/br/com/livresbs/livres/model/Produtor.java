@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-@Table(name = "tb_produtor")
+@Table(name = "produtores")
 @Getter
 @Setter
 @Builder
@@ -20,9 +20,9 @@ public class Produtor {
 
 	@Id
 	@NotBlank
-	private String cnpj;
+	private Integer id;
+
 	@NotBlank
-	private String nome;
-	
+	private String produtor;
 
 }

@@ -13,11 +13,11 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer quantidade;
+    private Double quantidade;
 
     @ManyToOne
-    @JoinColumn(name = "estoqueprodutor_id")
-    private EstoqueProdutor estoqueProdutor;
+    @JoinColumn(name = "cotacao_id")
+    private Cotacao cotacao;
 
     @ManyToOne
     @JoinColumn(name = "consumidor_id")

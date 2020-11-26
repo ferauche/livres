@@ -31,10 +31,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 		List<ProdutoDTO> listProdDto = new ArrayList<>();
 		produtoRepo.findAll().forEach(produto -> {
 
+			CategoriaProduto categoria = categoriaRepo.findByCategoria(produto.getCategoria()).get();
+
 			ProdutoDTO builderDto = ProdutoDTO.builder()
 					.id(produto.getId())
 					.nome(produto.getNome())
-					.categoria(produto.getCategoria().getId())
+					.categoria(categoria.getId())
 					.build();
 
 			listProdDto.add(builderDto);
@@ -49,13 +51,15 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 		ProdutoDTO prodDto;
 		if(!prod.isPresent()){
-
+			// TODO era pro grupo L1 colocar algo aqui
 		}
+
+		CategoriaProduto categoria = categoriaRepo.findByCategoria(prod.get().getCategoria()).get();
 
 		prodDto = ProdutoDTO.builder()
 							.id(id)
 							.nome(prod.get().getNome())
-							.categoria(prod.get().getCategoria().getId())
+							.categoria(categoria.getId())
 							.build();
 
 		return prodDto;
@@ -70,7 +74,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	    Produto prod = Produto.builder()
 	                  .nome(produto.getNome())
-	                  .categoria(categoria.get())
+	                  .categoria(categoria.get().getCategoria())
 	                  .build();
 
 	    produtoRepo.save(prod);

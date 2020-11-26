@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@Table(name = "pedidos")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,25 +18,20 @@ import java.util.List;
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private BigDecimal valorTotal;
 
     @Enumerated(EnumType.ORDINAL)
-    private StatusPedido status = StatusPedido.PENDENTE_PAGAMENTO;
+    private StatusPedido status = StatusPedido.CRIADO;
 
     @ManyToOne
     @JoinColumn(name = "consumidor_id")
     private Consumidor consumidor;
 
-    @ManyToMany
-    @JoinTable(
-        name = "pedido_estoqueprodutor",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "estoqueprodutor_id")
-    )
-    private List<EstoqueProdutor> estoques;
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itemPedidos;
 
     @ManyToOne
     @JoinColumn(name = "metodo_id")

@@ -10,8 +10,10 @@ import java.util.Optional;
 @Repository
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
 
-    Optional<Carrinho> findByConsumidorCpfAndEstoqueProdutorId(String cpf, Integer id);
+    Optional<Carrinho> findByConsumidorCpfAndCotacaoId(String cpf, Long id);
 
     List<Carrinho> findByConsumidorCpf(String cpf);
+
+    void deleteByConsumidorCpf(String cpf);
 
 }
