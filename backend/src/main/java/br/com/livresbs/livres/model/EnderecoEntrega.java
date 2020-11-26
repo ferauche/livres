@@ -16,10 +16,12 @@ import java.util.List;
 public class EnderecoEntrega {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer CEP;
+    private String cidade;
+    private String estado;
     private String endereco;
     private Integer numero;
     private String complemento;

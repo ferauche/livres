@@ -1,9 +1,7 @@
 package br.com.livresbs.livres.controller;
 
-import br.com.livresbs.livres.dto.CarrinhoDTO;
-import br.com.livresbs.livres.dto.CheckoutDTO;
-import br.com.livresbs.livres.dto.ProdutoCarrinhoDTO;
-import br.com.livresbs.livres.dto.ProdutosDisponiveisDTO;
+import br.com.livresbs.livres.dto.*;
+import br.com.livresbs.livres.model.StatusPedido;
 import br.com.livresbs.livres.service.CarrinhoService;
 import br.com.livresbs.livres.service.LojaService;
 import br.com.livresbs.livres.service.PedidoService;
@@ -48,9 +46,9 @@ public class LojaController {
     ) {
         carrinhoService.sincronizarProduto(
                 cpf,
-                produtoCarrinhoDTO.getEstoqueProdutorId(),
+                produtoCarrinhoDTO.getCotacaoId(),
                 produtoCarrinhoDTO.getQuantidade()
-        ) ;
+        );
     }
 
     @GetMapping("/carrinhos")
@@ -64,8 +62,28 @@ public class LojaController {
     }
 
     @GetMapping("/pedidos")
-    public CheckoutDTO checkout(@RequestHeader("cpf") String cpf) {
+    public CheckoutDTO checkout(
+            @RequestHeader(value = "cpf") String cpf) {
+
         return pedidoService.checkout(cpf);
     }
 
+    @PostMapping("/pedidos")
+    public void salvarPedido(@RequestHeader(value = "cpf") String cpf, @RequestBody FinalizarPedidoDTO body){
+        pedidoService.salvarPedido(cpf, body);
+    }
+
+    @GetMapping("/pedidos/salvos")
+    public PedidoDTO consultarPedidos(
+            @RequestParam(value = "status") StatusPedido status){
+
+        return  pedidoService.consultarPedido(status);
+    }
+
+    @PutMapping("/pedidos/{idPedido}/")
+    public void salvarResultadoAvaliacao(@PathVariable Long idPedido, @RequestBody @Valid AvaliacaoPedidoDTO body) {
+
+    }
+
+    
 }

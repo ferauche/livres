@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-@Table(name = "tb_categoria_produto")
+@Table(name = "categoriasprodutos")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,6 +22,6 @@ public class CategoriaProduto {
 	private Integer id;
     
     @NotBlank
-	private String nome;
+	private String categoria;
 
 }
